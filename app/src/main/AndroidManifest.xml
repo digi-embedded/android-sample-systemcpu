@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.digi.android.sample.pm.cpu"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-permission android:name="com.digi.android.permission.CPU" />
+    <uses-permission android:name="com.digi.android.permission.CPU_TEMPERATURE" />
+
+    <application
+        android:icon="@drawable/digi_icon"
+        android:label="@string/app_name"
+        android:allowBackup="true"
+        android:theme="@android:style/Theme.Holo.Light.Panel">
+        <uses-library
+            android:name="com.digi.android"
+            android:required="true" />
+
+        <activity
+            android:name="com.digi.android.sample.pm.cpu.CPUSampleApp"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

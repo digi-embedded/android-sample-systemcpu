@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Power Management - CPU Sample</string>
+
+    <string name="title_cores">CPU Cores</string>
+    <string name="title_usage">CPU Usage</string>
+    <string name="title_config">CPU Configuration</string>
+    <string name="title_pi">PI Calculation Test</string>
+    <string name="title_status">CPU status</string>
+    <string name="title_governor_interactive">Interactive governor configuration</string>
+    <string name="title_governor_conservative">Conservative governor configuration</string>
+    <string name="title_governor_ondemand">Ondemand governor configuration</string>
+    <string name="title_governor_userspace">Userspace governor configuration</string>
+
+    <string name="core_1">Core 1</string>
+    <string name="core_2">Core 2</string>
+    <string name="core_3">Core 3</string>
+    <string name="core_4">Core 4</string>
+
+    <string name="value_on">ON</string>
+    <string name="value_off">OFF</string>
+
+    <string name="button_governor">Configure governor</string>
+    <string name="button_start">Start</string>
+
+    <string name="legend_usage_frequency">Frequency</string>
+    <string name="legend_usage_percent">Usage %</string>
+
+    <string name="setting_max_scaling_freq">Max. scaling frequency\n(KHz)</string>
+    <string name="setting_min_scaling_freq">Min. scaling frequency\n(KHz)</string>
+    <string name="setting_governor_type">Governor type</string>
+
+    <string name="interactive_min_sample_time">Minimum sample time (us)</string>
+    <string name="interactive_hi_speed_freq">High speed frequency (Hz)</string>
+    <string name="interactive_go_hi_speed_load">Go high speed load (%)</string>
+    <string name="interactive_above_hi_speed_delay">Above high speed delay (us)</string>
+    <string name="interactive_timer_rate">Timer rate (us)</string>
+    <string name="interactive_timer_stack">Timer stack (us)</string>
+    <string name="interactive_boost">Boost</string>
+    <string name="interactive_boost_pulse_duration">Boost pulse duration (us)</string>
+
+    <string name="common_sampling_rate">Sampling rate (us)</string>
+    <string name="common_min_samplingrate">Minimum sampling rate (us)</string>
+    <string name="common_up_threshold">Up threshold (%)</string>
+    <string name="common_ignore_nice_load">Ignore nice load</string>
+    <string name="common_sampling_down_factor">Sampling down factor</string>
+
+    <string name="conservative_down_threshold">Down threshold (%)</string>
+    <string name="conservative_freq_step">Frequency step (%)</string>
+
+    <string name="userspace_custom_freq">Custom frequency (KHz)</string>
+
+    <string name="button_configure_governor">Configure selected governor</string>
+    <string name="button_start_calculation">Start Pi calculation</string>
+    <string name="button_view_results">View results</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
+
+    <string name="checkbox_show_graph">Show in graph</string>
+
+    <string name="pi_progress">Pi progress</string>
+    <string name="pi_total_time">Elapsed time</string>
+    <string name="pi_digits">Digits</string>
+    <string name="pi_result">Result</string>
+    <string name="pi_first_digits">(first %1$d digits)</string>
+
+    <string name="status_temperature">Temperature</string>
+    <string name="status_usage">Overall usage</string>
+    <string name="status_frequency">Current frequency</string>
+
+    <string name="description_cores">You can enable or disable the different cores of the CPU from this panel.</string>
+    <string name="description_cpu_freq">Configure the working frequencies and set governor type of the CPU. Depending on the governor selected, you might be able to configure additional settings.</string>
+    <string name="description_usage">This plot displays the overall CPU usage in % as well as the usage of each core of the CPUduring the last minute. You can hide the core usage series from the CPU Cores panel.</string>
+    <string name="description_pi_calc">This arithmetic test allows you to measure the time the CPU takes to calculate the specified decimal digits of the Pi number.</string>
+    <string name="description_status">Instant status parameters of the CPU.</string>
+    <string name="description_configure_governor">Configure the following governor settings:</string>
+</resources>
