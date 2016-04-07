@@ -223,7 +223,7 @@ public class CPUSampleApp extends Activity {
 		ArrayAdapter<Integer> frequenciesListAdapter = null;
 		try {
 			ArrayList<Integer> frequencies = cpuManager.getAvailableFrequencies();
-			frequenciesListAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, frequencies);
+			frequenciesListAdapter = new ArrayAdapter<Integer>(this, R.layout.spinner_item, frequencies);
 			frequenciesListAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
 			maxFrequencySpinner.setAdapter(frequenciesListAdapter);
 			minFrequencySpinner.setAdapter(frequenciesListAdapter);
@@ -247,7 +247,7 @@ public class CPUSampleApp extends Activity {
 		ArrayAdapter<GovernorType> governorTypesAdapter = null;
 		try {
 			ArrayList<GovernorType> governorTypes = cpuManager.getAvailableGovernorTypes();
-			governorTypesAdapter = new ArrayAdapter<GovernorType>(this, android.R.layout.simple_spinner_item, governorTypes);
+			governorTypesAdapter = new ArrayAdapter<GovernorType>(this, R.layout.spinner_item, governorTypes);
 			governorTypesAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
 			governorsSpinner.setAdapter(governorTypesAdapter);
 		} catch (CPUException e) {
