@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -49,7 +49,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 		// Custom frequency setting.
 		try {
 			int customFreq = cpuManager.getFrequency();
-			customFreqEditText.setText("" + customFreq);
+			customFreqEditText.setText(String.valueOf(customFreq));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -66,11 +66,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 		try {
 			customFreq = Integer.parseInt(customFreqValue.trim());
 			cpuManager.setFrequency(customFreq);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
-			e.printStackTrace();
-		} catch (UnsupportedCommandException e) {
+		} catch (NumberFormatException | CPUException | UnsupportedCommandException e) {
 			e.printStackTrace();
 		}
 	}
@@ -79,7 +75,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 	protected String validateSettings() {
 		// Custom frequency value.
 		String customFreqValue = customFreqEditText.getText().toString();
-		if (customFreqValue == null || customFreqValue.trim().length() == 0)
+		if (customFreqValue.trim().length() == 0)
 			return ERROR_CUSTOM_FREQ_EMPTY;
 		try {
 			int intVar = Integer.parseInt(customFreqValue.trim());

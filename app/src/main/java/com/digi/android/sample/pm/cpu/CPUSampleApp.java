@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2016, Digi International Inc. <support@digi.com>
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
 package com.digi.android.sample.pm.cpu;
 
 import android.app.Activity;
@@ -52,19 +68,28 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * CPU sample application.
+ *
+ * <p>This example displays some panels to configure the CPU cores and settings
+ * and monitoring some of the CPU parameters.</p>
+ *
+ * <p>For a complete description on the example, refer to the 'README.md' file
+ * included in the example directory.</p>
+ */
 public class CPUSampleApp extends Activity {
 
 	// Constants.
-	private static final int CPU_USAGE_MAX_TIME = 60;
-	private static final int MAX_DIGITS = 10000000;
-	private static final int MAX_DIGITS_RESULT = 1000;
-	private static final int STATUS_PERIOD = 3;
-
 	public static final String TARGET = "CPUSampleApp";
 	public static final String PATH = Environment.getExternalStorageDirectory().getPath() + File.separator + TARGET;
 
 	public static final String PI_STATUS_CANCELED = "Canceled";
 	public static final String PI_STATUS_FINISHED = "Finished";
+
+	private static final int CPU_USAGE_MAX_TIME = 60;
+	private static final int MAX_DIGITS = 10000000;
+	private static final int MAX_DIGITS_RESULT = 1000;
+	private static final int STATUS_PERIOD = 3;
 
 	// Variables.
 	private TextView piTimeText;
@@ -111,7 +136,6 @@ public class CPUSampleApp extends Activity {
 
 	private CPUTemperatureManager cpuTemperatureManager;
 
-	private boolean core1Enabled = true;
 	private boolean core2Enabled = false;
 	private boolean core3Enabled = false;
 	private boolean core4Enabled = false;
@@ -145,6 +169,40 @@ public class CPUSampleApp extends Activity {
 		// Initialize the application controls.
 		initializeControls();
 		addControlsCallbacks();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (progressReceiver == null)
+			progressReceiver = new ProgressReceiver();
+		registerReceiver(progressReceiver, new IntentFilter(Pi.NEW_PROGRESS_INTENT));
+
+		// Initialize all the CPU values and set them in the corresponding controls.
+		initializeValues();
+
+		// Initialize CPU Usage plot
+		initializeCPUUsagePlot();
+
+		// Start the CPU usage thread and CPU status timer.
+		startReadingUsage();
+		startCPUStatusTimer();
+
+		// Set focus to the start Pi calculation button.
+		piCalculationButton.setFocusable(true);
+		piCalculationButton.requestFocus();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		stopReadingUsage();
+		stopCPUStatusTimer();
+		PiParallel.cancel();
+
+		if (progressReceiver != null)
+			unregisterReceiver(progressReceiver);
 	}
 
 	/**
@@ -194,6 +252,7 @@ public class CPUSampleApp extends Activity {
 		numberOfCores = cpuManager.getNumberOfCores();
 		try {
 			core1CheckBox.setEnabled(true);
+			core1Switch.setChecked(true);
 			core1CheckBox.setChecked(true);
 			if (numberOfCores > 1) {
 				core2Switch.setEnabled(true);
@@ -213,25 +272,20 @@ public class CPUSampleApp extends Activity {
 				core4CheckBox.setEnabled(true);
 				core4CheckBox.setChecked(true);
 			}
-		} catch (NoSuchCoreException e) {
-				displayError(e.getMessage());
-		} catch (CPUException e) {
-				displayError(e.getMessage());
+		} catch (NoSuchCoreException | CPUException e) {
+			displayError(e.getMessage());
 		}
 
 		// Get the available frequencies and fill the configuration controls.
-		ArrayAdapter<Integer> frequenciesListAdapter = null;
+		ArrayAdapter<Integer> frequenciesListAdapter;
 		try {
 			ArrayList<Integer> frequencies = cpuManager.getAvailableFrequencies();
-			frequenciesListAdapter = new ArrayAdapter<Integer>(this, R.layout.spinner_item, frequencies);
+			frequenciesListAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, frequencies);
 			frequenciesListAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
 			maxFrequencySpinner.setAdapter(frequenciesListAdapter);
 			minFrequencySpinner.setAdapter(frequenciesListAdapter);
-		} catch (CPUException e) {
-			displayError(e.getMessage());
-		}
-		// Configure the selected max and min scaling frequencies.
-		try {
+
+			// Configure the selected max and min scaling frequencies.
 			int maxScalingFreq = cpuManager.getMaxScalingFrequency();
 			int minScalingFreq = cpuManager.getMinScalingFrequency();
 
@@ -244,18 +298,14 @@ public class CPUSampleApp extends Activity {
 		}
 
 		// Get the available governor types and fill the governors list.
-		ArrayAdapter<GovernorType> governorTypesAdapter = null;
+		ArrayAdapter<GovernorType> governorTypesAdapter;
 		try {
 			ArrayList<GovernorType> governorTypes = cpuManager.getAvailableGovernorTypes();
-			governorTypesAdapter = new ArrayAdapter<GovernorType>(this, R.layout.spinner_item, governorTypes);
+			governorTypesAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, governorTypes);
 			governorTypesAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
 			governorsSpinner.setAdapter(governorTypesAdapter);
-		} catch (CPUException e) {
-			displayError(e.getMessage());
-		}
 
-		// Configure the selected governor type.
-		try {
+			// Configure the selected governor type.
 			currentGovernorType = cpuManager.getGovernor().getGovernorType();
 			if (governorTypesAdapter.getPosition(currentGovernorType) != -1)
 				governorsSpinner.setSelection(governorTypesAdapter.getPosition(currentGovernorType));
@@ -272,7 +322,7 @@ public class CPUSampleApp extends Activity {
 	 * Adds the callbacks to all the UI controls the user will interact with.
 	 */
 	private void addControlsCallbacks() {
-		// Set the core switches callbacks
+		// Set the core switches callbacks.
 		core2Switch.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -512,9 +562,7 @@ public class CPUSampleApp extends Activity {
 					break;
 			}
 			refreshCoresControls();
-		} catch (CPUException e) {
-			displayError(e.getMessage());
-		} catch (NoSuchCoreException e) {
+		} catch (CPUException | NoSuchCoreException e) {
 			displayError(e.getMessage());
 		}
 	}
@@ -560,7 +608,6 @@ public class CPUSampleApp extends Activity {
 	 * Refreshes the core controls.
 	 */
 	private void refreshCoresControls() {
-		core1Switch.setChecked(core1Enabled);
 		core2Switch.setChecked(core2Enabled);
 		core3Switch.setChecked(core3Enabled);
 		core4Switch.setChecked(core4Enabled);
@@ -687,7 +734,7 @@ public class CPUSampleApp extends Activity {
 	private void handleCalculatePiButtonPressed() {
 		if (piCalculationButton.isChecked()) {
 			if (Long.parseLong(piDigitsEditText.getText().toString()) > MAX_DIGITS)
-				piDigitsEditText.setText(MAX_DIGITS + "");
+				piDigitsEditText.setText(String.valueOf(MAX_DIGITS));
 
 			deleteTempFiles();
 			piProgressText.setText("0%");
@@ -711,13 +758,13 @@ public class CPUSampleApp extends Activity {
 							 */
 							public void run() {
 								piProgressText.setText(PI_STATUS_FINISHED);
-								piTimeText.setText(elapsed / 1000.0 + " s");
+								piTimeText.setText(String.format("%.2f s", elapsed / 1000.0));
 								piResultsButton.setEnabled(true);
 								piCalculationButton.setChecked(false);
 								deleteTempFiles();
 							}
 						});
-					} catch (ThreadDeath e) {}
+					} catch (ThreadDeath ignored) {}
 				}
 			}).start();
 		} else {
@@ -775,7 +822,7 @@ public class CPUSampleApp extends Activity {
 			while (readingUsage) {
 				try {
 					ArrayList<Float> usages = cpuManager.getUsage(250);
-					overallUsage = (float)((int)(usages.get(0) * 100)/100.0f);
+					overallUsage = ((int)(usages.get(0) * 100))/100.0f;
 					if (!readingUsage)
 						return;
 
@@ -806,7 +853,7 @@ public class CPUSampleApp extends Activity {
 				}
 				try {
 					Thread.sleep(500);
-				} catch (InterruptedException e) { }
+				} catch (InterruptedException ignored) { }
 			}
 		}
 	}
@@ -857,14 +904,12 @@ public class CPUSampleApp extends Activity {
 							try {
 								currentFrequency = cpuManager.getFrequency();
 								temperature = cpuTemperatureManager.getCurrentTemperature();
-							} catch (CPUException e) {
-								e.printStackTrace();
-							} catch (IOException e) {
+							} catch (CPUException | IOException e) {
 								e.printStackTrace();
 							}
-							statusTemperatureText.setText(temperature + " ºC");
-							statusUsageText.setText(overallUsage + " %");
-							statusFreqText.setText(currentFrequency + " KHz");
+							statusTemperatureText.setText(String.format("%.2f °C", temperature));
+							statusUsageText.setText(String.format("%.2f %%", overallUsage));
+							statusFreqText.setText(String.format("%d kHz", currentFrequency));
 						}
 					}
 				});
@@ -907,10 +952,7 @@ public class CPUSampleApp extends Activity {
 	 * This receiver listens for new progress from the Pi calculus.
 	 */
 	private class ProgressReceiver extends BroadcastReceiver {
-		/*
-		 * (non-Javadoc)
-		 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
-		 */
+		@Override
 		public void onReceive(Context context, Intent intent) {
 			String progress = intent.getExtras().getString("progress");
 			if (progress != null) {
@@ -928,49 +970,5 @@ public class CPUSampleApp extends Activity {
 	 */
 	public static CPUSampleApp getInstance() {
 		return instance;
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		stopReadingUsage();
-		stopCPUStatusTimer();
-		PiParallel.cancel();
-
-		if (progressReceiver != null)
-			unregisterReceiver(progressReceiver);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		if (progressReceiver == null)
-			progressReceiver = new ProgressReceiver();
-		registerReceiver(progressReceiver, new IntentFilter(Pi.NEW_PROGRESS_INTENT));
-
-		// Initialize all the CPU values and set them in the corresponding controls.
-		initializeValues();
-
-		// Initialize CPU Usage plot
-		initializeCPUUsagePlot();
-
-		// Start the CPU usage thread and CPU status timer.
-		startReadingUsage();
-		startCPUStatusTimer();
-
-		// Set focus to the start Pi calculation button.
-		piCalculationButton.setFocusable(true);
-		piCalculationButton.requestFocus();
 	}
 }
