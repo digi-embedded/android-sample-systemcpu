@@ -21,7 +21,6 @@ Make sure the hardware is set up correctly:
 
 1. The device is powered on.
 2. The device is connected directly to the PC by the micro USB cable.
-3. The desired ADC channel is enabled.
 
 Demo run
 --------
