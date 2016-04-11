@@ -204,7 +204,10 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 
 		// Ignore nice load setting.
 		try {
-			governorConservative.setIgnoreNiceLoad(ignoreNiceLoadSwitch.isChecked());
+			if (ignoreNiceLoadSwitch.isChecked())
+				governorConservative.enableIgnoreNiceLoad();
+			else
+				governorConservative.disableIgnoreNiceLoad();
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
