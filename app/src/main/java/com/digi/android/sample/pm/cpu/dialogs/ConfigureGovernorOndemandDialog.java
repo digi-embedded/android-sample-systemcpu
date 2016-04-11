@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -78,7 +78,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		// Sampling rate setting.
 		try {
 			long samplingRate = governorOnDemand.getSamplingRate();
-			samplingRateEditText.setText("" + samplingRate);
+			samplingRateEditText.setText(String.valueOf(samplingRate));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -86,7 +86,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		// Up threshold setting.
 		try {
 			int upThreshold = governorOnDemand.getUpThreshold();
-			upThresholdEditText.setText("" + upThreshold);
+			upThresholdEditText.setText(String.valueOf(upThreshold));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -94,7 +94,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		// Sampling down factor setting.
 		try {
 			int samplingDownFactor = governorOnDemand.getSamplingDownFactor();
-			samplingDownFactorEditText.setText("" + samplingDownFactor);
+			samplingDownFactorEditText.setText(String.valueOf(samplingDownFactor));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -102,7 +102,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		// Minimum sampling rate setting.
 		try {
 			long minSamplingRate = governorOnDemand.getMinSamplingRate();
-			minSamplingRateTextView.setText("" + minSamplingRate);
+			minSamplingRateTextView.setText(String.valueOf(minSamplingRate));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -132,9 +132,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		try {
 			samplingRate = Long.parseLong(samplingRateValue.trim());
 			governorOnDemand.setSamplingRate(samplingRate);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -144,9 +142,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		try {
 			upThreshold = Integer.parseInt(upThresholdValue.trim());
 			governorOnDemand.setUpThreshold(upThreshold);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -156,9 +152,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		try {
 			samplingDownFactor = Integer.parseInt(samplingDownFactorValue.trim());
 			governorOnDemand.setSamplingDownFactor(samplingDownFactor);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -174,7 +168,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 	protected String validateSettings() {
 		// Sampling rate value.
 		String samplingRateValue = samplingRateEditText.getText().toString();
-		if (samplingRateValue == null || samplingRateValue.trim().length() == 0)
+		if (samplingRateValue.trim().length() == 0)
 			return ERROR_SAMPLING_RATE_EMPTY;
 		try {
 			Long longVar = Long.parseLong(samplingRateValue.trim());
@@ -186,7 +180,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 
 		// Up threshold value.
 		String upThresholdValue = upThresholdEditText.getText().toString();
-		if (upThresholdValue == null || upThresholdValue.trim().length() == 0)
+		if (upThresholdValue.trim().length() == 0)
 			return ERROR_UP_THRESHOLD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(upThresholdValue.trim());
@@ -198,7 +192,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 
 		// Sampling down factor value.
 		String samplingDownFactorValue = samplingDownFactorEditText.getText().toString();
-		if (samplingDownFactorValue == null || samplingDownFactorValue.trim().length() == 0)
+		if (samplingDownFactorValue.trim().length() == 0)
 			return ERROR_SAMPLING_DOWN_FACTOR_EMPTY;
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());

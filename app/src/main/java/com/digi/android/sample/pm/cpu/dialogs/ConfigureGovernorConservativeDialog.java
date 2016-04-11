@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -86,7 +86,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		// Sampling rate setting.
 		try {
 			long samplingRate = governorConservative.getSamplingRate();
-			samplingRateEditText.setText("" + samplingRate);
+			samplingRateEditText.setText(String.valueOf(samplingRate));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -94,7 +94,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		// Up threshold setting.
 		try {
 			int upThreshold = governorConservative.getUpThreshold();
-			upThresholdEditText.setText("" + upThreshold);
+			upThresholdEditText.setText(String.valueOf(upThreshold));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -102,7 +102,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		// Sampling down factor setting.
 		try {
 			int samplingDownFactor = governorConservative.getSamplingDownFactor();
-			samplingDownFactorEditText.setText("" + samplingDownFactor);
+			samplingDownFactorEditText.setText(String.valueOf(samplingDownFactor));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -110,7 +110,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		// Down threshold setting.
 		try {
 			int downThreshold = governorConservative.getDownThreshold();
-			downThresholdEditText.setText("" + downThreshold);
+			downThresholdEditText.setText(String.valueOf(downThreshold));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -118,7 +118,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		// Frequency step setting.
 		try {
 			int freqStep = governorConservative.getFreqStep();
-			freqStepEditText.setText("" + freqStep);
+			freqStepEditText.setText(String.valueOf(freqStep));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -126,7 +126,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		// Minimum sampling rate setting.
 		try {
 			long minSamplingRate = governorConservative.getMinSamplingRate();
-			minSamplingRateTextView.setText("" + minSamplingRate);
+			minSamplingRateTextView.setText(String.valueOf(minSamplingRate));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -158,9 +158,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		try {
 			samplingRate = Long.parseLong(samplingRateValue.trim());
 			governorConservative.setSamplingRate(samplingRate);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -170,9 +168,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		try {
 			upThreshold = Integer.parseInt(upThresholdValue.trim());
 			governorConservative.setUpThreshold(upThreshold);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -182,9 +178,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		try {
 			samplingDownFactor = Integer.parseInt(samplingDownFactorValue.trim());
 			governorConservative.setSamplingDownFactor(samplingDownFactor);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -194,9 +188,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		try {
 			downThreshold = Integer.parseInt(downThresholdValue.trim());
 			governorConservative.setDownThreshold(downThreshold);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -206,9 +198,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		try {
 			freqStep = Integer.parseInt(freqStepValue.trim());
 			governorConservative.setFreqStep(freqStep);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -224,7 +214,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 	protected String validateSettings() {
 		// Sampling rate value.
 		String samplingRateValue = samplingRateEditText.getText().toString();
-		if (samplingRateValue == null || samplingRateValue.trim().length() == 0)
+		if (samplingRateValue.trim().length() == 0)
 			return ERROR_SAMPLING_RATE_EMPTY;
 		try {
 			Long longVar = Long.parseLong(samplingRateValue.trim());
@@ -236,7 +226,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 
 		// Up threshold value.
 		String upThresholdValue = upThresholdEditText.getText().toString();
-		if (upThresholdValue == null || upThresholdValue.trim().length() == 0)
+		if (upThresholdValue.trim().length() == 0)
 			return ERROR_UP_THRESHOLD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(upThresholdValue.trim());
@@ -248,7 +238,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 
 		// Sampling down factor value.
 		String samplingDownFactorValue = samplingDownFactorEditText.getText().toString();
-		if (samplingDownFactorValue == null || samplingDownFactorValue.trim().length() == 0)
+		if (samplingDownFactorValue.trim().length() == 0)
 			return ERROR_SAMPLING_DOWN_FACTOR_EMPTY;
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());
@@ -260,7 +250,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 
 		// Down threshold value.
 		String downThresholdValue = downThresholdEditText.getText().toString();
-		if (downThresholdValue == null || downThresholdValue.trim().length() == 0)
+		if (downThresholdValue.trim().length() == 0)
 			return ERROR_DOWN_THRESHOLD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(downThresholdValue.trim());
@@ -272,7 +262,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 
 		// Frequency step value.
 		String freqStepValue = freqStepEditText.getText().toString();
-		if (freqStepValue == null || freqStepValue.trim().length() == 0)
+		if (freqStepValue.trim().length() == 0)
 			return ERROR_FREQ_STEP_EMPTY;
 		try {
 			int intVar = Integer.parseInt(freqStepValue.trim());

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -89,7 +89,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		// Minimum sample rate setting.
 		try {
 			long minSampleRate = governorInteractive.getMinSampleTime();
-			minSampleRateEditText.setText("" + minSampleRate);
+			minSampleRateEditText.setText(String.valueOf(minSampleRate));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +97,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		// High speed frequency setting.
 		try {
 			int hiSpeedFreq = governorInteractive.getHiSpeedFreq();
-			hiSpeedFreqEditText.setText("" + hiSpeedFreq);
+			hiSpeedFreqEditText.setText(String.valueOf(hiSpeedFreq));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -105,7 +105,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		// Go high speed load setting.
 		try {
 			int goHiSpeedLoad = governorInteractive.getGoHiSpeedLoad();
-			goHiSpeedLoadEditText.setText("" + goHiSpeedLoad);
+			goHiSpeedLoadEditText.setText(String.valueOf(goHiSpeedLoad));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -113,7 +113,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		// Above high speed delay setting.
 		try {
 			long aboveHiSpeedDelay = governorInteractive.getAboveHiSpeedDelay();
-			aboveHiSpeedDelayEditText.setText("" + aboveHiSpeedDelay);
+			aboveHiSpeedDelayEditText.setText(String.valueOf(aboveHiSpeedDelay));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -121,7 +121,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		// Timer rate setting.
 		try {
 			long timerRate = governorInteractive.getTimerRate();
-			timerRateEditText.setText("" + timerRate);
+			timerRateEditText.setText(String.valueOf(timerRate));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -129,7 +129,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		// Timer stack setting.
 		try {
 			long timerStack = governorInteractive.getTimerSlack();
-			timerStackEditText.setText("" + timerStack);
+			timerStackEditText.setText(String.valueOf(timerStack));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -137,7 +137,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		// Boost pulse duration setting.
 		try {
 			long boostPulseDuration = governorInteractive.getBoostPulseDuration();
-			boostPulseDurationEditText.setText("" + boostPulseDuration);
+			boostPulseDurationEditText.setText(String.valueOf(boostPulseDuration));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -171,9 +171,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			minSampleRate = Long.parseLong(minSampleRateValue.trim());
 			governorInteractive.setMinSampleTime(minSampleRate);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -183,9 +181,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			hiSpeedFreq = Integer.parseInt(hiSpeedFreqValue.trim());
 			governorInteractive.setHiSpeedFreq(hiSpeedFreq);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -195,9 +191,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			goHiSpeedLoad = Integer.parseInt(goHiSpeedLoadValue.trim());
 			governorInteractive.setGoHiSpeedLoad(goHiSpeedLoad);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -207,9 +201,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			aboveHiSpeedDelay = Long.parseLong(aboveHiSpeedDelayValue.trim());
 			governorInteractive.setAboveHiSpeedDelay(aboveHiSpeedDelay);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -219,9 +211,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			timerRate = Long.parseLong(timerRateValue.trim());
 			governorInteractive.setAboveHiSpeedDelay(timerRate);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -231,9 +221,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			timerStack = Long.parseLong(timerStackValue.trim());
 			governorInteractive.setAboveHiSpeedDelay(timerStack);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -243,9 +231,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			boostPulseDuration = Long.parseLong(boostPulseDurationValue.trim());
 			governorInteractive.setAboveHiSpeedDelay(boostPulseDuration);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (CPUException e) {
+		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
 
@@ -264,7 +250,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 	protected String validateSettings() {
 		// Minimum sample rate value.
 		String minSampleRateValue = minSampleRateEditText.getText().toString();
-		if (minSampleRateValue == null || minSampleRateValue.trim().length() == 0)
+		if (minSampleRateValue.trim().length() == 0)
 			return ERROR_MIN_SAMPLE_RATE_EMPTY;
 		try {
 			Long longVar = Long.parseLong(minSampleRateValue.trim());
@@ -276,7 +262,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// High speed frequency value.
 		String hiSpeedFreqValue = hiSpeedFreqEditText.getText().toString();
-		if (hiSpeedFreqValue == null || hiSpeedFreqValue.trim().length() == 0)
+		if (hiSpeedFreqValue.trim().length() == 0)
 			return ERROR_HI_SPEED_FREQ_EMPTY;
 		try {
 			int intVar = Integer.parseInt(hiSpeedFreqValue.trim());
@@ -288,7 +274,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Go high speed load value.
 		String goHiSpeedLoadValue = goHiSpeedLoadEditText.getText().toString();
-		if (goHiSpeedLoadValue == null || goHiSpeedLoadValue.trim().length() == 0)
+		if (goHiSpeedLoadValue.trim().length() == 0)
 			return ERROR_GO_HI_SPEED_LOAD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(goHiSpeedLoadValue.trim());
@@ -300,7 +286,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Above high speed delay value.
 		String aboveHiSpeedDelayValue = aboveHiSpeedDelayEditText.getText().toString();
-		if (aboveHiSpeedDelayValue == null || aboveHiSpeedDelayValue.trim().length() == 0)
+		if (aboveHiSpeedDelayValue.trim().length() == 0)
 			return ERROR_ABOVE_HI_SPEED_DELAY_EMPTY;
 		try {
 			Long longVar = Long.parseLong(aboveHiSpeedDelayValue.trim());
@@ -312,7 +298,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Timer rate value.
 		String timerRateValue = timerRateEditText.getText().toString();
-		if (timerRateValue == null || timerRateValue.trim().length() == 0)
+		if (timerRateValue.trim().length() == 0)
 			return ERROR_TIMER_RATE_EMPTY;
 		try {
 			Long longVar = Long.parseLong(timerRateValue.trim());
@@ -324,7 +310,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Timer stack value.
 		String timerStackValue = timerStackEditText.getText().toString();
-		if (timerStackValue == null || timerStackValue.trim().length() == 0)
+		if (timerStackValue.trim().length() == 0)
 			return ERROR_TIMER_STACK_EMPTY;
 		try {
 			Long longVar = Long.parseLong(timerStackValue.trim());
@@ -336,7 +322,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Boost pulse duration value.
 		String boostPulseDurationValue = boostPulseDurationEditText.getText().toString();
-		if (boostPulseDurationValue == null || boostPulseDurationValue.trim().length() == 0)
+		if (boostPulseDurationValue.trim().length() == 0)
 			return ERROR_BOOST_PULSE_DURATION_EMPTY;
 		try {
 			Long longVar = Long.parseLong(boostPulseDurationValue.trim());
