@@ -34,7 +34,7 @@
     <string name="interactive_go_hi_speed_load">Go high speed load (%)</string>
     <string name="interactive_above_hi_speed_delay">Above high speed delay (us)</string>
     <string name="interactive_timer_rate">Timer rate (us)</string>
-    <string name="interactive_timer_stack">Timer stack (us)</string>
+    <string name="interactive_timer_slack">Timer slack (us)</string>
     <string name="interactive_boost">Boost</string>
     <string name="interactive_boost_pulse_duration">Boost pulse duration (us)</string>
 
@@ -69,7 +69,7 @@
 
     <string name="description_cores">You can enable or disable the different cores of the CPU from this panel.</string>
     <string name="description_cpu_freq">Configure the frequencies and set governor type. Depending on the governor selected, you can configure additional settings.</string>
-    <string name="description_usage">This plot displays the overall CPU usage in % as well as the usage of each core of the CPUduring the last minute. You can hide the core usage series from the CPU Cores panel.</string>
+    <string name="description_usage">This plot displays the overall CPU usage in % as well as the usage of each core of the CPU during the last minute. You can hide the core usage series from the CPU Cores panel.</string>
     <string name="description_pi_calc">This arithmetic test allows you to measure the time the CPU takes to calculate the specified decimal digits of the Pi number.</string>
     <string name="description_status">Instant status parameters of the CPU.</string>
     <string name="description_configure_governor">Configure the following governor settings:</string>

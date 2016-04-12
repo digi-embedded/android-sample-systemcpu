@@ -34,7 +34,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 	private static final String ERROR_GO_HI_SPEED_LOAD_EMPTY = "'Go high speed load' value cannot be empty.";
 	private static final String ERROR_ABOVE_HI_SPEED_DELAY_EMPTY = "'Above high speed delay' value cannot be empty.";
 	private static final String ERROR_TIMER_RATE_EMPTY = "'Timer rate' value cannot be empty.";
-	private static final String ERROR_TIMER_STACK_EMPTY = "'Timer stack' value cannot be empty.";
+	private static final String ERROR_TIMER_SLACK_EMPTY = "'Timer slack' value cannot be empty.";
 	private static final String ERROR_BOOST_PULSE_DURATION_EMPTY = "'Boost pulse duration' value cannot be empty.";
 
 	private static final String ERROR_MIN_SAMPLE_RATE_INVALID = "Invalid 'Sample rate' value.";
@@ -42,7 +42,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 	private static final String ERROR_GO_HI_SPEED_LOAD_INVALID = "Invalid 'Go high speed load' value.";
 	private static final String ERROR_ABOVE_HI_SPEED_DELAY_INVALID = "Invalid 'Above high speed delay' value.";
 	private static final String ERROR_TIMER_RATE_INVALID = "Invalid 'Timer rate' value.";
-	private static final String ERROR_TIMER_STACK_INVALID = "Invalid 'Timer stack' value.";
+	private static final String ERROR_TIMER_SLACK_INVALID = "Invalid 'Timer slack' value.";
 	private static final String ERROR_BOOST_PULSE_DURATION_INVALID = "Invalid 'Boost pulse duration' value.";
 
 	// Variables.
@@ -51,7 +51,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 	private EditText goHiSpeedLoadEditText;
 	private EditText aboveHiSpeedDelayEditText;
 	private EditText timerRateEditText;
-	private EditText timerStackEditText;
+	private EditText timerSlackEditText;
 	private EditText boostPulseDurationEditText;
 
 	private Switch boostSwitch;
@@ -75,7 +75,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		goHiSpeedLoadEditText = (EditText)configureDialogView.findViewById(R.id.interactive_go_hi_speed_load);
 		aboveHiSpeedDelayEditText = (EditText)configureDialogView.findViewById(R.id.interactive_above_hi_speed_delay);
 		timerRateEditText = (EditText)configureDialogView.findViewById(R.id.interactive_timer_rate);
-		timerStackEditText = (EditText)configureDialogView.findViewById(R.id.interactive_timer_stack);
+		timerSlackEditText = (EditText)configureDialogView.findViewById(R.id.interactive_timer_slack);
 		boostPulseDurationEditText = (EditText)configureDialogView.findViewById(R.id.interactive_boost_pulse_duration);
 
 		boostSwitch = (Switch)configureDialogView.findViewById(R.id.interactive_boost);
@@ -126,10 +126,10 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			e.printStackTrace();
 		}
 
-		// Timer stack setting.
+		// Timer slack setting.
 		try {
-			long timerStack = governorInteractive.getTimerSlack();
-			timerStackEditText.setText(String.valueOf(timerStack));
+			long timerSlack = governorInteractive.getTimerSlack();
+			timerSlackEditText.setText(String.valueOf(timerSlack));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -156,7 +156,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		goHiSpeedLoadEditText.addTextChangedListener(textWatcher);
 		aboveHiSpeedDelayEditText.addTextChangedListener(textWatcher);
 		timerRateEditText.addTextChangedListener(textWatcher);
-		timerStackEditText.addTextChangedListener(textWatcher);
+		timerSlackEditText.addTextChangedListener(textWatcher);
 		boostPulseDurationEditText.addTextChangedListener(textWatcher);
 	}
 
@@ -215,12 +215,12 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			e.printStackTrace();
 		}
 
-		// Timer stack setting.
-		String timerStackValue = timerStackEditText.getText().toString();
-		long timerStack;
+		// Timer slack setting.
+		String timerSlackValue = timerSlackEditText.getText().toString();
+		long timerSlack;
 		try {
-			timerStack = Long.parseLong(timerStackValue.trim());
-			governorInteractive.setTimerSlack(timerStack);
+			timerSlack = Long.parseLong(timerSlackValue.trim());
+			governorInteractive.setTimerSlack(timerSlack);
 		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
@@ -308,16 +308,16 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_TIMER_RATE_INVALID;
 		}
 
-		// Timer stack value.
-		String timerStackValue = timerStackEditText.getText().toString();
-		if (timerStackValue.trim().length() == 0)
-			return ERROR_TIMER_STACK_EMPTY;
+		// Timer slack value.
+		String timerSlackValue = timerSlackEditText.getText().toString();
+		if (timerSlackValue.trim().length() == 0)
+			return ERROR_TIMER_SLACK_EMPTY;
 		try {
-			Long longVar = Long.parseLong(timerStackValue.trim());
+			Long longVar = Long.parseLong(timerSlackValue.trim());
 			if (longVar < 0)
-				return ERROR_TIMER_STACK_INVALID;
+				return ERROR_TIMER_SLACK_INVALID;
 		} catch (NumberFormatException e) {
-			return ERROR_TIMER_STACK_INVALID;
+			return ERROR_TIMER_SLACK_INVALID;
 		}
 
 		// Boost pulse duration value.

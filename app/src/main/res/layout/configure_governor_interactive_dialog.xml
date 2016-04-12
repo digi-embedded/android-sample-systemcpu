@@ -132,12 +132,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/dark_gray"
-                android:text="@string/interactive_timer_stack"
+                android:text="@string/interactive_timer_slack"
                 android:textAppearance="@style/standard"
                 android:gravity="right"
                 android:layout_gravity="center_vertical"/>
             <EditText
-                android:id="@+id/interactive_timer_stack"
+                android:id="@+id/interactive_timer_slack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
