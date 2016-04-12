@@ -210,7 +210,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		long timerRate;
 		try {
 			timerRate = Long.parseLong(timerRateValue.trim());
-			governorInteractive.setAboveHiSpeedDelay(timerRate);
+			governorInteractive.setTimerRate(timerRate);
 		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
@@ -220,7 +220,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		long timerStack;
 		try {
 			timerStack = Long.parseLong(timerStackValue.trim());
-			governorInteractive.setAboveHiSpeedDelay(timerStack);
+			governorInteractive.setTimerSlack(timerStack);
 		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
@@ -230,7 +230,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		long boostPulseDuration;
 		try {
 			boostPulseDuration = Long.parseLong(boostPulseDurationValue.trim());
-			governorInteractive.setAboveHiSpeedDelay(boostPulseDuration);
+			governorInteractive.setBoostPulseDuration(boostPulseDuration);
 		} catch (NumberFormatException | CPUException e) {
 			e.printStackTrace();
 		}
