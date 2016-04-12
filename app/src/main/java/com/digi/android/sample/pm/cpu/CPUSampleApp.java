@@ -201,6 +201,11 @@ public class CPUSampleApp extends Activity {
 		stopCPUStatusTimer();
 		PiParallel.cancel();
 
+		cpuPlot.removeSeries(cpuSeries);
+		cpuPlot.removeSeries(core1Series);
+		cpuPlot.removeSeries(core2Series);
+		cpuPlot.removeSeries(core3Series);
+		cpuPlot.removeSeries(core4Series);
 		if (progressReceiver != null)
 			unregisterReceiver(progressReceiver);
 	}
