@@ -5,7 +5,6 @@
     android:versionName="1.0">
 
     <uses-permission android:name="com.digi.android.permission.CPU" />
-    <uses-permission android:name="com.digi.android.permission.CPU_TEMPERATURE" />
 
     <application
         android:icon="@drawable/digi_icon"

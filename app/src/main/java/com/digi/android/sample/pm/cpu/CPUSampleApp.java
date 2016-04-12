@@ -51,6 +51,7 @@ import com.androidplot.xy.XYPlot;
 import com.digi.android.pm.cpu.CPUManager;
 import com.digi.android.pm.cpu.GovernorType;
 import com.digi.android.pm.cpu.exception.CPUException;
+import com.digi.android.pm.cpu.exception.CPUTemperatureException;
 import com.digi.android.pm.cpu.exception.NoSuchCoreException;
 import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorConservativeDialog;
 import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorDialog;
@@ -59,10 +60,8 @@ import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorOndemandDialog;
 import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorUserspaceDialog;
 import com.digi.android.sample.pm.cpu.pi.Pi;
 import com.digi.android.sample.pm.cpu.pi.PiParallel;
-import com.digi.android.temperature.CPUTemperatureManager;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -134,8 +133,6 @@ public class CPUSampleApp extends Activity {
 
 	private CPUManager cpuManager;
 
-	private CPUTemperatureManager cpuTemperatureManager;
-
 	private boolean core2Enabled = false;
 	private boolean core3Enabled = false;
 	private boolean core4Enabled = false;
@@ -206,6 +203,7 @@ public class CPUSampleApp extends Activity {
 		cpuPlot.removeSeries(core2Series);
 		cpuPlot.removeSeries(core3Series);
 		cpuPlot.removeSeries(core4Series);
+
 		if (progressReceiver != null)
 			unregisterReceiver(progressReceiver);
 	}
@@ -216,8 +214,6 @@ public class CPUSampleApp extends Activity {
 	private void initializeControls() {
 		// Declare the CPUManager to be used in the application.
 		cpuManager = new CPUManager(this);
-		// Declare the CPUTemperatureManager to read the temperature of the module.
-		cpuTemperatureManager = new CPUTemperatureManager(this);
 
 		// Declare views by retrieving them with the ID.
 		piTimeText = (TextView) findViewById(R.id.pi_total_time);
@@ -908,8 +904,8 @@ public class CPUSampleApp extends Activity {
 							float temperature = -1.0f;
 							try {
 								currentFrequency = cpuManager.getFrequency();
-								temperature = cpuTemperatureManager.getCurrentTemperature();
-							} catch (CPUException | IOException e) {
+								temperature = cpuManager.getCurrentTemperature();
+							} catch (CPUException | CPUTemperatureException e) {
 								e.printStackTrace();
 							}
 							statusTemperatureText.setText(String.format("%.2f °C", temperature));
