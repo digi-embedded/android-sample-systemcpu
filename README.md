@@ -45,6 +45,7 @@ displays specific functionality provided by the API:
 Compatible with
 ---------------
 
+* ConnectCore 6 SBC
 * ConnectCore 6 SBC v3
 
 License
