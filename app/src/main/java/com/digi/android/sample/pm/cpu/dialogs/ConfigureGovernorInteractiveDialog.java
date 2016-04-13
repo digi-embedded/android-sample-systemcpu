@@ -278,7 +278,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_GO_HI_SPEED_LOAD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(goHiSpeedLoadValue.trim());
-			if (intVar < 0 | intVar > 100)
+			if (intVar < 0 || intVar > 100)
 				return ERROR_GO_HI_SPEED_LOAD_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_GO_HI_SPEED_LOAD_INVALID;
