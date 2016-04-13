@@ -148,7 +148,15 @@ public abstract class ConfigureGovernorDialog {
 	 */
 	protected void validateDialog() {
 		String errorMessage = validateSettings();
-		statusText.setError(errorMessage);
+		if (errorMessage != null) {
+			statusText.setError(errorMessage);
+			statusText.setText(errorMessage);
+			statusText.setTextColor(context.getResources().getColor(R.color.red));
+		} else {
+			statusText.setError(errorMessage);
+			statusText.setText(R.string.description_configure_governor);
+			statusText.setTextColor(context.getResources().getColor(R.color.black));
+		}
 
 		configureDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(errorMessage == null);
 	}

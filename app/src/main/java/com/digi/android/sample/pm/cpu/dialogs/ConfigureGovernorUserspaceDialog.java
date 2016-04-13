@@ -79,9 +79,9 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 			return ERROR_CUSTOM_FREQ_EMPTY;
 		try {
 			int intVar = Integer.parseInt(customFreqValue.trim());
-			if (intVar < 0)
+			if (!cpuManager.getAvailableFrequencies().contains(intVar))
 				return ERROR_CUSTOM_FREQ_INVALID;
-		} catch (NumberFormatException e) {
+		} catch (CPUException | NumberFormatException e) {
 			return ERROR_CUSTOM_FREQ_INVALID;
 		}
 

@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.androidplot.Plot;
@@ -687,7 +688,19 @@ public class CPUSampleApp extends Activity {
 			return;
 
 		int maxScalingFrequency = (int)maxFrequencySpinner.getSelectedItem();
+		int minScalingFrequency = (int)minFrequencySpinner.getSelectedItem();
+
 		try {
+			// Check the value of the frequency.
+			if (maxScalingFrequency < minScalingFrequency) {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"Maximum scaling frequency cannot be smaller than the minimum scaling frequency.", Toast.LENGTH_LONG);
+				ArrayAdapter<Integer> frequenciesListAdapter = (ArrayAdapter<Integer>)maxFrequencySpinner.getAdapter();
+				maxFrequencySpinner.setSelection(frequenciesListAdapter.getPosition(cpuManager.getMaxScalingFrequency()));
+				toast.show();
+				return;
+			}
+
 			cpuManager.setMaxScalingFrequency(maxScalingFrequency);
 		} catch (CPUException e) {
 			e.printStackTrace();
@@ -702,8 +715,20 @@ public class CPUSampleApp extends Activity {
 				|| minFrequencySpinner.getSelectedItemPosition() == -1)
 			return;
 
-		int minScalingFrequency = (int) minFrequencySpinner.getSelectedItem();
+		int minScalingFrequency = (int)minFrequencySpinner.getSelectedItem();
+		int maxScalingFrequency = (int)maxFrequencySpinner.getSelectedItem();
+
 		try {
+			// Check the value of the frequency.
+			if (maxScalingFrequency < minScalingFrequency) {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"Minimum scaling frequency cannot be greater than the maximum scaling frequency.", Toast.LENGTH_LONG);
+				ArrayAdapter<Integer> frequenciesListAdapter = (ArrayAdapter<Integer>)minFrequencySpinner.getAdapter();
+				minFrequencySpinner.setSelection(frequenciesListAdapter.getPosition(cpuManager.getMinScalingFrequency()));
+				toast.show();
+				return;
+			}
+
 			cpuManager.setMinScalingFrequency(minScalingFrequency);
 		} catch (CPUException e) {
 			e.printStackTrace();

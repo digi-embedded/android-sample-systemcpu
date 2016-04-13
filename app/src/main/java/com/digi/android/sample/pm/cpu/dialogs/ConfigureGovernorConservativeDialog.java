@@ -233,7 +233,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 			return ERROR_UP_THRESHOLD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(upThresholdValue.trim());
-			if (intVar < 0)
+			if (intVar < 0 || intVar > 100)
 				return ERROR_UP_THRESHOLD_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_UP_THRESHOLD_INVALID;
@@ -245,7 +245,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 			return ERROR_SAMPLING_DOWN_FACTOR_EMPTY;
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());
-			if (intVar < 0)
+			if (intVar < 0 || intVar > 100)
 				return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
@@ -257,7 +257,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 			return ERROR_DOWN_THRESHOLD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(downThresholdValue.trim());
-			if (intVar < 0)
+			if (intVar < 0 || intVar > 100)
 				return ERROR_DOWN_THRESHOLD_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_DOWN_THRESHOLD_INVALID;
@@ -269,7 +269,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 			return ERROR_FREQ_STEP_EMPTY;
 		try {
 			int intVar = Integer.parseInt(freqStepValue.trim());
-			if (intVar < 0)
+			if (intVar < 0 || intVar > 100)
 				return ERROR_FREQ_STEP_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_FREQ_STEP_INVALID;

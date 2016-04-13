@@ -266,9 +266,9 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_HI_SPEED_FREQ_EMPTY;
 		try {
 			int intVar = Integer.parseInt(hiSpeedFreqValue.trim());
-			if (intVar < 0)
+			if (!cpuManager.getAvailableFrequencies().contains(intVar))
 				return ERROR_HI_SPEED_FREQ_INVALID;
-		} catch (NumberFormatException e) {
+		} catch (CPUException | NumberFormatException e) {
 			return ERROR_HI_SPEED_FREQ_INVALID;
 		}
 
@@ -278,7 +278,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_GO_HI_SPEED_LOAD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(goHiSpeedLoadValue.trim());
-			if (intVar < 0)
+			if (intVar < 0 | intVar > 100)
 				return ERROR_GO_HI_SPEED_LOAD_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_GO_HI_SPEED_LOAD_INVALID;
@@ -314,7 +314,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_TIMER_SLACK_EMPTY;
 		try {
 			Long longVar = Long.parseLong(timerSlackValue.trim());
-			if (longVar < 0)
+			if (longVar < -1)
 				return ERROR_TIMER_SLACK_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_TIMER_SLACK_INVALID;
