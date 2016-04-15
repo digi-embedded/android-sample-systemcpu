@@ -138,6 +138,7 @@ public class CPUSampleApp extends Activity {
 	private boolean core3Enabled = false;
 	private boolean core4Enabled = false;
 	private boolean readingUsage = false;
+	private boolean governorDlgOpen = false;
 
 	private int numberOfCores = 1;
 	private int statusLoops = 0;
@@ -644,6 +645,11 @@ public class CPUSampleApp extends Activity {
 	 * configured.
 	 */
 	private void handleConfigureGovernorButtonPressed() {
+		if (governorDlgOpen)
+			return;
+
+		governorDlgOpen = true;
+
 		final ConfigureGovernorDialog configureGovernorDialog;
 		switch (currentGovernorType) {
 			case CONSERVATIVE:
@@ -670,6 +676,7 @@ public class CPUSampleApp extends Activity {
 				synchronized (configureGovernorDialog) {
 					try {
 						configureGovernorDialog.wait();
+						governorDlgOpen = false;
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
