@@ -221,23 +221,43 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 			return ERROR_SAMPLING_RATE_EMPTY;
 		try {
 			Long longVar = Long.parseLong(samplingRateValue.trim());
-			if (longVar < 0)
+			long minSampleRate = governorConservative.getMinSamplingRate();
+			if (longVar < minSampleRate || longVar > GovernorConservative.MAX_SAMPLING_RATE)
 				return ERROR_SAMPLING_RATE_INVALID;
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | CPUException e) {
 			return ERROR_SAMPLING_RATE_INVALID;
 		}
 
 		// Up threshold value.
 		String upThresholdValue = upThresholdEditText.getText().toString();
+		int upThr;
 		if (upThresholdValue.trim().length() == 0)
 			return ERROR_UP_THRESHOLD_EMPTY;
 		try {
-			int intVar = Integer.parseInt(upThresholdValue.trim());
-			if (intVar < 0 || intVar > 100)
-				return ERROR_UP_THRESHOLD_INVALID;
+			upThr = Integer.parseInt(upThresholdValue.trim());
 		} catch (NumberFormatException e) {
 			return ERROR_UP_THRESHOLD_INVALID;
 		}
+
+		// Down threshold value.
+		String downThresholdValue = downThresholdEditText.getText().toString();
+		int downThr;
+		if (downThresholdValue.trim().length() == 0)
+			return ERROR_DOWN_THRESHOLD_EMPTY;
+		try {
+			downThr = Integer.parseInt(downThresholdValue.trim());
+		} catch (NumberFormatException e) {
+			return ERROR_DOWN_THRESHOLD_INVALID;
+		}
+
+		// Up threshold limits.
+		if (upThr <= downThr || upThr > 100)
+			return ERROR_UP_THRESHOLD_INVALID;
+
+		// Down threshold limits.
+		if (downThr < GovernorConservative.MIN_DOWN_THRESHOLD || downThr >= upThr)
+			return ERROR_DOWN_THRESHOLD_INVALID;
+
 
 		// Sampling down factor value.
 		String samplingDownFactorValue = samplingDownFactorEditText.getText().toString();
@@ -245,22 +265,10 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 			return ERROR_SAMPLING_DOWN_FACTOR_EMPTY;
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());
-			if (intVar < 0 || intVar > 100)
+			if (intVar < 1 || intVar > GovernorConservative.MAX_SAMPLING_DOWN_FACTOR)
 				return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
-		}
-
-		// Down threshold value.
-		String downThresholdValue = downThresholdEditText.getText().toString();
-		if (downThresholdValue.trim().length() == 0)
-			return ERROR_DOWN_THRESHOLD_EMPTY;
-		try {
-			int intVar = Integer.parseInt(downThresholdValue.trim());
-			if (intVar < 0 || intVar > 100)
-				return ERROR_DOWN_THRESHOLD_INVALID;
-		} catch (NumberFormatException e) {
-			return ERROR_DOWN_THRESHOLD_INVALID;
 		}
 
 		// Frequency step value.

@@ -175,7 +175,8 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 			return ERROR_SAMPLING_RATE_EMPTY;
 		try {
 			Long longVar = Long.parseLong(samplingRateValue.trim());
-			if (longVar < governorOnDemand.getMinSamplingRate())
+			long minSampleRate = governorOnDemand.getMinSamplingRate();
+			if (longVar < minSampleRate || longVar > GovernorOnDemand.MAX_SAMPLING_RATE)
 				return ERROR_SAMPLING_RATE_INVALID;
 		} catch (CPUException | NumberFormatException e) {
 			return ERROR_SAMPLING_RATE_INVALID;
@@ -187,7 +188,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 			return ERROR_UP_THRESHOLD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(upThresholdValue.trim());
-			if (intVar < 0 || intVar > 100)
+			if (intVar <= GovernorOnDemand.MIN_UP_THRESHOLD || intVar > 100)
 				return ERROR_UP_THRESHOLD_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_UP_THRESHOLD_INVALID;
@@ -199,7 +200,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 			return ERROR_SAMPLING_DOWN_FACTOR_EMPTY;
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());
-			if (intVar < 0 || intVar > 100)
+			if (intVar < 1 || intVar > GovernorOnDemand.MAX_SAMPLING_DOWN_FACTOR)
 				return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_SAMPLING_DOWN_FACTOR_INVALID;

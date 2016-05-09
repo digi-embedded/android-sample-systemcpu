@@ -145,6 +145,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		// Boost setting.
 		try {
 			boolean boost = governorInteractive.getBoost();
+
 			boostSwitch.setChecked(boost);
 		} catch (CPUException e) {
 			e.printStackTrace();
@@ -254,7 +255,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_MIN_SAMPLE_RATE_EMPTY;
 		try {
 			Long longVar = Long.parseLong(minSampleRateValue.trim());
-			if (longVar < 0)
+			if (longVar < 0 || longVar > GovernorInteractive.MAX_MIN_SAMPLE_TIME)
 				return ERROR_MIN_SAMPLE_RATE_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_MIN_SAMPLE_RATE_INVALID;
@@ -290,7 +291,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_ABOVE_HI_SPEED_DELAY_EMPTY;
 		try {
 			Long longVar = Long.parseLong(aboveHiSpeedDelayValue.trim());
-			if (longVar < 0)
+			if (longVar < 0 || longVar > GovernorInteractive.MAX_ABOVE_HIGH_SPEED_DELAY)
 				return ERROR_ABOVE_HI_SPEED_DELAY_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_ABOVE_HI_SPEED_DELAY_INVALID;
@@ -302,7 +303,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_TIMER_RATE_EMPTY;
 		try {
 			Long longVar = Long.parseLong(timerRateValue.trim());
-			if (longVar < 0)
+			if (longVar < 0 || longVar > GovernorInteractive.MAX_TIMER_RATE)
 				return ERROR_TIMER_RATE_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_TIMER_RATE_INVALID;
@@ -314,7 +315,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_TIMER_SLACK_EMPTY;
 		try {
 			Long longVar = Long.parseLong(timerSlackValue.trim());
-			if (longVar < -1)
+			if (longVar < -1 || longVar > GovernorInteractive.MAX_TIMER_SLACK)
 				return ERROR_TIMER_SLACK_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_TIMER_SLACK_INVALID;
@@ -326,7 +327,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 			return ERROR_BOOST_PULSE_DURATION_EMPTY;
 		try {
 			Long longVar = Long.parseLong(boostPulseDurationValue.trim());
-			if (longVar < 0)
+			if (longVar < 0 || longVar > GovernorInteractive.MAX_BOOSTPULSE_DURATION)
 				return ERROR_BOOST_PULSE_DURATION_INVALID;
 		} catch (NumberFormatException e) {
 			return ERROR_BOOST_PULSE_DURATION_INVALID;
