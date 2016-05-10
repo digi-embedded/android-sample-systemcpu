@@ -1,4 +1,4 @@
-package com.digi.android.sample.pm.cpu.pi;
+package com.digi.android.sample.system.cpu.pi;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;

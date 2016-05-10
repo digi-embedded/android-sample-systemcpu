@@ -14,17 +14,17 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.sample.pm.cpu.dialogs;
+package com.digi.android.sample.system.cpu.dialogs;
 
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.Switch;
 
-import com.digi.android.pm.cpu.CPUManager;
-import com.digi.android.pm.cpu.GovernorInteractive;
-import com.digi.android.pm.cpu.GovernorType;
-import com.digi.android.pm.cpu.exception.CPUException;
-import com.digi.android.sample.pm.cpu.R;
+import com.digi.android.system.cpu.CPUManager;
+import com.digi.android.system.cpu.GovernorInteractive;
+import com.digi.android.system.cpu.GovernorType;
+import com.digi.android.system.cpu.exception.CPUException;
+import com.digi.android.sample.system.cpu.R;
 
 public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog {
 

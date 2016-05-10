@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Power Management - CPU Sample</string>
+    <string name="app_name">System Management - CPU Sample</string>
 
     <string name="title_cores">CPU Cores</string>
     <string name="title_usage">CPU Usage</string>

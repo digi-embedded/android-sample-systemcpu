@@ -1,7 +1,7 @@
-Power Management - CPU Sample Application
+System Management - CPU Sample Application
 =========================================
 
-This application demonstrates the usage of the Power Management - CPU API. It
+This application demonstrates the usage of the System Management - CPU API. It
 displays some panels to configure the CPU cores and settings and monitoring
 some of the CPU parameters.
 

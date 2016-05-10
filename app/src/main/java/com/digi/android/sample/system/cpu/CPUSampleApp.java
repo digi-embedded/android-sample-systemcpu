@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.sample.pm.cpu;
+package com.digi.android.sample.system.cpu;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -49,18 +49,18 @@ import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
-import com.digi.android.pm.cpu.CPUManager;
-import com.digi.android.pm.cpu.GovernorType;
-import com.digi.android.pm.cpu.exception.CPUException;
-import com.digi.android.pm.cpu.exception.CPUTemperatureException;
-import com.digi.android.pm.cpu.exception.NoSuchCoreException;
-import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorConservativeDialog;
-import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorDialog;
-import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorInteractiveDialog;
-import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorOndemandDialog;
-import com.digi.android.sample.pm.cpu.dialogs.ConfigureGovernorUserspaceDialog;
-import com.digi.android.sample.pm.cpu.pi.Pi;
-import com.digi.android.sample.pm.cpu.pi.PiParallel;
+import com.digi.android.system.cpu.CPUManager;
+import com.digi.android.system.cpu.GovernorType;
+import com.digi.android.system.cpu.exception.CPUException;
+import com.digi.android.system.cpu.exception.CPUTemperatureException;
+import com.digi.android.system.cpu.exception.NoSuchCoreException;
+import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorConservativeDialog;
+import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorDialog;
+import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorInteractiveDialog;
+import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorOndemandDialog;
+import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorUserspaceDialog;
+import com.digi.android.sample.system.cpu.pi.Pi;
+import com.digi.android.sample.system.cpu.pi.PiParallel;
 
 import java.io.File;
 import java.text.DecimalFormat;

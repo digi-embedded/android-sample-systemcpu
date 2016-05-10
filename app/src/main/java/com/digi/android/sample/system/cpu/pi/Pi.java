@@ -1,4 +1,4 @@
-package com.digi.android.sample.pm.cpu.pi;
+package com.digi.android.sample.system.cpu.pi;
 
 import java.io.Serializable;
 import java.io.PrintWriter;
@@ -12,7 +12,7 @@ import org.apfloat.ApfloatRuntimeException;
 
 import android.content.Intent;
 
-import com.digi.android.sample.pm.cpu.CPUSampleApp;
+import com.digi.android.sample.system.cpu.CPUSampleApp;
 
 /**
  * Calculates pi using four different algorithms.

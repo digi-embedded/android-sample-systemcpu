@@ -3,7 +3,7 @@ android {
     compileSdkVersion 'Digi International:SDK Add-On for ConnectCore 6:22'
     buildToolsVersion "23.0.2"
     defaultConfig {
-        applicationId "com.digi.android.sample.pm.cpu"
+        applicationId "com.digi.android.sample.system.cpu"
         minSdkVersion 22
         targetSdkVersion 22
     }
