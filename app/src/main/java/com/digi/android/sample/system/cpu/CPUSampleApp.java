@@ -28,7 +28,6 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -62,7 +61,6 @@ import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorUserspaceDial
 import com.digi.android.sample.system.cpu.pi.Pi;
 import com.digi.android.sample.system.cpu.pi.PiParallel;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -80,14 +78,11 @@ import java.util.TimerTask;
 public class CPUSampleApp extends Activity {
 
 	// Constants.
-	public static final String TARGET = "CPUSampleApp";
-	public static final String PATH = Environment.getExternalStorageDirectory().getPath() + File.separator + TARGET;
-
 	public static final String PI_STATUS_CANCELED = "Canceled";
 	public static final String PI_STATUS_FINISHED = "Finished";
 
 	private static final int CPU_USAGE_MAX_TIME = 60;
-	private static final int MAX_DIGITS = 10000000;
+	private static final long MAX_DIGITS = 30000000L;
 	private static final int MAX_DIGITS_RESULT = 1000;
 	private static final int STATUS_PERIOD = 3;
 
@@ -385,7 +380,7 @@ public class CPUSampleApp extends Activity {
 			@Override
 			public void afterTextChanged(Editable arg0) {
 				try {
-					piCalculationButton.setEnabled(Integer.parseInt(piDigitsEditText.getText().toString()) > 0);
+					piCalculationButton.setEnabled(Long.parseLong(piDigitsEditText.getText().toString()) > 0);
 				} catch (NumberFormatException ex) {
 					piCalculationButton.setEnabled(false);
 				}
@@ -769,32 +764,24 @@ public class CPUSampleApp extends Activity {
 			if (Long.parseLong(piDigitsEditText.getText().toString()) > MAX_DIGITS)
 				piDigitsEditText.setText(String.valueOf(MAX_DIGITS));
 
-			deleteTempFiles();
 			piProgressText.setText("0%");
 			piTimeText.setText("");
 			piResultsButton.setEnabled(false);
 
 			new Thread(new Runnable() {
-				/*
-				 * (non-Javadoc)
-				 * @see java.lang.Runnable#run()
-				 */
+				@Override
 				public void run() {
 					try {
 						long time = System.currentTimeMillis();
 						PiParallel.calculatePi(Long.parseLong(piDigitsEditText.getText().toString()));
 						final long elapsed = System.currentTimeMillis() - time;
 						runOnUiThread(new Runnable() {
-							/*
-							 * (non-Javadoc)
-							 * @see java.lang.Runnable#run()
-							 */
+							@Override
 							public void run() {
 								piProgressText.setText(PI_STATUS_FINISHED);
 								piTimeText.setText(String.format("%.2f s", elapsed / 1000.0));
 								piResultsButton.setEnabled(true);
 								piCalculationButton.setChecked(false);
-								deleteTempFiles();
 							}
 						});
 					} catch (ThreadDeath ignored) {}
@@ -802,7 +789,6 @@ public class CPUSampleApp extends Activity {
 			}).start();
 		} else {
 			PiParallel.cancel();
-			deleteTempFiles();
 			piProgressText.setText(PI_STATUS_CANCELED);
 		}
 	}
@@ -836,6 +822,7 @@ public class CPUSampleApp extends Activity {
 		builder.setPositiveButton(
 				"OK",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 						finish();
@@ -918,10 +905,7 @@ public class CPUSampleApp extends Activity {
 			timer.cancel();
 		timer = new Timer(true);
 		timer.schedule(new TimerTask() {
-			/*
-			 * (non-Javadoc)
-			 * @see java.util.TimerTask#run()
-			 */
+			@Override
 			public void run() {
 				runOnUiThread(new Runnable() {
 					@Override
@@ -958,27 +942,6 @@ public class CPUSampleApp extends Activity {
 			timer.cancel();
 			timer.purge();
 		}
-	}
-
-	/**
-	 * Deletes the temporary files as result of the Pi calculus.
-	 */
-	private void deleteTempFiles() {
-		new Thread(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * @see java.lang.Runnable#run()
-			 */
-			public void run() {
-				File file = new File(PATH);
-				if (file.listFiles() == null)
-					return;
-				for (File f : file.listFiles()) {
-					if (f.getName().endsWith(".ap"))
-						f.delete();
-				}
-			}
-		}).start();
 	}
 
 	/**

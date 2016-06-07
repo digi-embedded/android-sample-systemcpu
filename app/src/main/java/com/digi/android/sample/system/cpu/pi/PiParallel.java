@@ -1,11 +1,14 @@
 package com.digi.android.sample.system.cpu.pi;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.IOException;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatContext;
 import org.apfloat.ApfloatRuntimeException;
+import org.apfloat.spi.BuilderFactory;
+import org.apfloat.spi.FilenameGenerator;
 
 /**
  * Calculates pi using multiple threads in parallel.
@@ -34,10 +37,20 @@ public class PiParallel extends Pi {
 		long precision = decimals;
 		int method = 0;
 		int numberOfProcessors = Runtime.getRuntime().availableProcessors();
-		int radix = ApfloatContext.getContext().getDefaultRadix();
-		
+		ApfloatContext ctx = ApfloatContext.getContext();
+		int radix = ctx.getDefaultRadix();
 
-		ApfloatContext.getContext().setNumberOfProcessors(numberOfProcessors);
+		Pi.setAlive(true);
+
+		ctx.setNumberOfProcessors(numberOfProcessors);
+		ctx.setCleanupAtExit(true);
+
+		// Write PI files to the temp directory.
+		String path = System.getProperty("java.io.tmpdir");
+		if (path != null && !path.endsWith(File.separator))
+			path = path + File.separator;
+		FilenameGenerator filenameGenerator = new FilenameGenerator(path, null, null);
+		ctx.setFilenameGenerator(filenameGenerator);
 
 		Operation<Apfloat> operation;
 
@@ -58,11 +71,15 @@ public class PiParallel extends Pi {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			// Garbage collection may not have run perfectly by this point.
+			BuilderFactory builderFactory = ctx.getBuilderFactory();
+			builderFactory.gc();
 		}
 	}
 	
 	public static void cancel() {
-		Pi.running = false;
+		Pi.setAlive(false);
 	}
 
 	protected static class ParallelBinarySplittingPiCalculator extends

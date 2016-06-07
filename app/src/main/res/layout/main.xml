@@ -450,7 +450,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="8dp"
                             android:inputType="number"
-                            android:maxLength="10"
+                            android:maxLength="8"
                             android:text="100000"
                             android:textAppearance="@style/standard"/>
                     </TableRow>

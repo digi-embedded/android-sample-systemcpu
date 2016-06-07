@@ -26,7 +26,6 @@ public class Pi {
 	// output (print() does not)
 	
 	public final static String NEW_PROGRESS_INTENT = "NEW_PROGRESS";
-	protected static boolean running = true;
 
 	/**
 	 * Terms for the binary splitting series.
@@ -548,7 +547,7 @@ public class Pi {
 			int oldPercentComplete = (int) (100 * oldElements / this.totalElements);
 			int percentComplete = (int) (100 * elements / this.totalElements);
 
-			if (percentComplete != oldPercentComplete && running) {
+			if (percentComplete != oldPercentComplete) {
 				Intent intent = new Intent(NEW_PROGRESS_INTENT);
 				intent.putExtra("progress", (percentComplete < 100) ? percentComplete + "%" : "100%");
 				CPUSampleApp.getInstance().getApplicationContext().sendBroadcast(intent);
@@ -880,7 +879,6 @@ public class Pi {
 	public static void run(long precision, int radix,
 			Operation<Apfloat> operation) throws IOException,
 			ApfloatRuntimeException {
-		running = true;
 //		dump();
 //		Pi.err.println("Calculating pi to " + precision + " radix-" + radix
 //				+ " digits");
@@ -1015,7 +1013,7 @@ public class Pi {
 	 */
 
 	protected static void checkAlive() {
-		if (!Pi.isAlive || !running) {
+		if (!Pi.isAlive) {
 			throw new ThreadDeath();
 		}
 	}

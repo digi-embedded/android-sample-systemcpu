@@ -153,7 +153,7 @@ public abstract class ConfigureGovernorDialog {
 			statusText.setText(errorMessage);
 			statusText.setTextColor(context.getResources().getColor(R.color.red));
 		} else {
-			statusText.setError(errorMessage);
+			statusText.setError(null);
 			statusText.setText(R.string.description_configure_governor);
 			statusText.setTextColor(context.getResources().getColor(R.color.black));
 		}
