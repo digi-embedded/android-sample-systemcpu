@@ -60,7 +60,9 @@ import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorOndemandDialo
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorUserspaceDialog;
 import com.digi.android.sample.system.cpu.pi.Pi;
 import com.digi.android.sample.system.cpu.pi.PiParallel;
+import com.digi.android.system.memory.MemoryManager;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -92,6 +94,7 @@ public class CPUSampleApp extends Activity {
 	private TextView statusTemperatureText;
 	private TextView statusUsageText;
 	private TextView statusFreqText;
+	private TextView statusMemoryText;
 
 	private EditText piDigitsEditText;
 
@@ -128,6 +131,7 @@ public class CPUSampleApp extends Activity {
 	private LineAndPointFormatter core4Formatter;
 
 	private CPUManager cpuManager;
+	private MemoryManager memoryManager;
 
 	private boolean core2Enabled = false;
 	private boolean core3Enabled = false;
@@ -209,8 +213,9 @@ public class CPUSampleApp extends Activity {
 	 * Initializes application controls.
 	 */
 	private void initializeControls() {
-		// Declare the CPUManager to be used in the application.
+		// Declare the managers to be used in the application.
 		cpuManager = new CPUManager(this);
+		memoryManager = new MemoryManager(this);
 
 		// Declare views by retrieving them with the ID.
 		piTimeText = (TextView) findViewById(R.id.pi_total_time);
@@ -218,6 +223,7 @@ public class CPUSampleApp extends Activity {
 		statusTemperatureText = (TextView) findViewById(R.id.status_temperature);
 		statusUsageText = (TextView) findViewById(R.id.status_usage);
 		statusFreqText = (TextView) findViewById(R.id.status_frequency);
+		statusMemoryText = (TextView) findViewById(R.id.status_memory);
 
 		piDigitsEditText = (EditText) findViewById(R.id.pi_digits);
 
@@ -918,15 +924,18 @@ public class CPUSampleApp extends Activity {
 							statusLoops = 0;
 							int currentFrequency = -1;
 							float temperature = -1.0f;
+							long memory = -1;
 							try {
 								currentFrequency = cpuManager.getFrequency();
 								temperature = cpuManager.getCurrentTemperature();
-							} catch (CPUException | CPUTemperatureException e) {
+								memory = memoryManager.getFreeMemory();
+							} catch (CPUException | CPUTemperatureException | IOException e) {
 								e.printStackTrace();
 							}
 							statusTemperatureText.setText(String.format("%.2f °C", temperature));
 							statusUsageText.setText(String.format("%.2f %%", overallUsage));
 							statusFreqText.setText(String.format("%d kHz", currentFrequency));
+							statusMemoryText.setText(String.format("%d kB", memory));
 						}
 					}
 				});

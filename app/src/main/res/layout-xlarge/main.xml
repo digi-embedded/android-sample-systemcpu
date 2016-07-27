@@ -581,7 +581,7 @@
                     android:layout_height="match_parent"
                     android:padding="15dp"
                     android:stretchColumns="*"
-                    android:weightSum="3">
+                    android:weightSum="4">
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -643,6 +643,29 @@
                             android:textAppearance="@style/standard" />
                         <TextView
                             android:id="@+id/status_frequency"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="left"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="15dp"
+                            android:textAppearance="@style/standard"/>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status_memory"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/dark_gray"
+                            android:gravity="right"
+                            android:layout_gravity="center_vertical"
+                            android:textAppearance="@style/standard" />
+                        <TextView
+                            android:id="@+id/status_memory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"

@@ -5,7 +5,7 @@
     <string name="title_usage">CPU Usage</string>
     <string name="title_config">CPU Configuration</string>
     <string name="title_pi">PI Calculation Test</string>
-    <string name="title_status">CPU status</string>
+    <string name="title_status">CPU and memory status</string>
     <string name="title_governor_interactive">Interactive governor configuration</string>
     <string name="title_governor_conservative">Conservative governor configuration</string>
     <string name="title_governor_ondemand">Ondemand governor configuration</string>
@@ -66,11 +66,12 @@
     <string name="status_temperature">Temperature</string>
     <string name="status_usage">Overall usage</string>
     <string name="status_frequency">Current frequency</string>
+    <string name="status_memory">Free memory</string>
 
     <string name="description_cores">You can enable or disable the different cores of the CPU from this panel.</string>
     <string name="description_cpu_freq">Configure the frequencies and set governor type. Depending on the governor selected, you can configure additional settings.</string>
     <string name="description_usage">This plot displays the overall CPU usage in % as well as the usage of each core of the CPU during the last minute. You can hide the core usage series from the CPU Cores panel.</string>
     <string name="description_pi_calc">This arithmetic test allows you to measure the time the CPU takes to calculate the specified decimal digits of the Pi number.</string>
-    <string name="description_status">Instant status parameters of the CPU.</string>
+    <string name="description_status">Instant status parameters of the CPU and memory.</string>
     <string name="description_configure_governor">Configure the following governor settings:</string>
 </resources>

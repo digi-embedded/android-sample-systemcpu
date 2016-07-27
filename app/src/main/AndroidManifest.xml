@@ -5,6 +5,7 @@
     android:versionName="1.0">
 
     <uses-permission android:name="com.digi.android.permission.CPU" />
+    <uses-permission android:name="com.digi.android.permission.MEMORY" />
 
     <application
         android:icon="@drawable/digi_icon"
