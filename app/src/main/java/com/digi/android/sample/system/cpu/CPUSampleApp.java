@@ -919,23 +919,25 @@ public class CPUSampleApp extends Activity {
 						cpuPlot.redraw();
 						statusLoops += 1;
 
-						// Update the status values of the CPU.
+						// Update the status values.
 						if (statusLoops == STATUS_PERIOD) {
 							statusLoops = 0;
 							int currentFrequency = -1;
 							float temperature = -1.0f;
 							long memory = -1;
+							long totalMemory = -1;
 							try {
 								currentFrequency = cpuManager.getFrequency();
 								temperature = cpuManager.getCurrentTemperature();
 								memory = memoryManager.getFreeMemory();
+								totalMemory = memoryManager.getTotalMemory();
 							} catch (CPUException | CPUTemperatureException | IOException e) {
 								e.printStackTrace();
 							}
 							statusTemperatureText.setText(String.format("%.2f °C", temperature));
 							statusUsageText.setText(String.format("%.2f %%", overallUsage));
 							statusFreqText.setText(String.format("%d kHz", currentFrequency));
-							statusMemoryText.setText(String.format("%d kB", memory));
+							statusMemoryText.setText(String.format("%d / %d kB", memory, totalMemory));
 						}
 					}
 				});

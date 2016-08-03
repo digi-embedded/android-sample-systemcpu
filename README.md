@@ -1,9 +1,9 @@
 System Management - CPU Sample Application
 =========================================
 
-This application demonstrates the usage of the System Management - CPU API. It
-displays some panels to configure the CPU cores and settings and monitoring
-some of the CPU parameters.
+This application demonstrates the usage of the System Management - CPU and
+memory APIs. It displays some panels to configure the CPU cores and settings and
+monitoring some of the CPU and memory parameters.
 
 Demo requirements
 -----------------
@@ -31,16 +31,17 @@ launch the project.
 While it is running, the application displays a set of panels. Each panel
 displays specific functionality provided by the API:
 
-  * CPU Cores: Allows you to enable and disable the different CPU cores.
-  * CPU Configuration: Allows you to configure the CPU frequencies and
-                       governor. Depending on the selected governor you will
-                       be able to configure advanced governor settings.
-  * CPU Usage: Displays the overall usage of the CPU in % as well as the
+  * CPU cores: Allows you to enable and disable the different CPU cores.
+  * CPU configuration: Allows you to configure the CPU frequencies and
+                       governor. Depending on the selected governor you can
+                       configure advanced governor settings.
+  * CPU usage: Displays the overall usage of the CPU in % as well as the
                usage of each core.
-  * PI Calculation Test: Executes an arithmetic test calculating the
+  * PI calculation test: Executes an arithmetic test calculating the
                          specified digits of the number Pi.
-  * CPU Status: Displays instant values of some CPU parameters such as
-                temperature, overall usage and current frequency.
+  * CPU and memory status: Displays instant values of some CPU and memory
+                           parameters such as temperature, overall usage,
+                           current frequency, and free vs total memory.
 
 Compatible with
 ---------------

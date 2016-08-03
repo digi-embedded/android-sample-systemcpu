@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">System Management - CPU Sample</string>
 
-    <string name="title_cores">CPU Cores</string>
-    <string name="title_usage">CPU Usage</string>
-    <string name="title_config">CPU Configuration</string>
-    <string name="title_pi">PI Calculation Test</string>
+    <string name="title_cores">CPU cores</string>
+    <string name="title_usage">CPU usage</string>
+    <string name="title_config">CPU configuration</string>
+    <string name="title_pi">PI calculation test</string>
     <string name="title_status">CPU and memory status</string>
     <string name="title_governor_interactive">Interactive governor configuration</string>
     <string name="title_governor_conservative">Conservative governor configuration</string>
