@@ -48,13 +48,16 @@ import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
+
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorConservativeDialog;
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorDialog;
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorInteractiveDialog;
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorOndemandDialog;
+import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorSchedutilDialog;
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorUserspaceDialog;
 import com.digi.android.sample.system.cpu.pi.Pi;
 import com.digi.android.sample.system.cpu.pi.PiParallel;
+
 import com.digi.android.system.cpu.CPUManager;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
@@ -633,6 +636,7 @@ public class CPUSampleApp extends Activity {
 			case ONDEMAND:
 			case INTERACTIVE:
 			case USERSPACE:
+            case SCHEDUTIL:
 				configureGovernorButton.setEnabled(true);
 				break;
 			case PERFORMANCE:
@@ -663,6 +667,9 @@ public class CPUSampleApp extends Activity {
 			case INTERACTIVE:
 				configureGovernorDialog = new ConfigureGovernorInteractiveDialog(this, cpuManager);
 				break;
+            case SCHEDUTIL:
+                configureGovernorDialog = new ConfigureGovernorSchedutilDialog(this, cpuManager);
+                break;
 			case USERSPACE:
 			default:
 				configureGovernorDialog = new ConfigureGovernorUserspaceDialog(this, cpuManager);

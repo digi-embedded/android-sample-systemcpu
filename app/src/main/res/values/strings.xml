@@ -49,6 +49,9 @@
 
     <string name="userspace_custom_freq">Custom frequency (KHz)</string>
 
+    <string name="schedutil_down_rate_limit">Down rate limit (uS)</string>
+    <string name="schedutil_up_rate_limit">Up rate limit (uS)</string>
+
     <string name="button_configure_governor">Configure selected governor</string>
     <string name="button_start_calculation">Start Pi calculation</string>
     <string name="button_view_results">View results</string>

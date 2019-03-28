@@ -90,6 +90,9 @@ public abstract class ConfigureGovernorDialog {
 			case CONSERVATIVE:
 				configureDialogView = layoutInflater.inflate(R.layout.configure_governor_conservative_dialog, null);
 				break;
+			case SCHEDUTIL:
+				configureDialogView = layoutInflater.inflate(R.layout.configure_governor_schedutil_dialog, null);
+				break;
 			case USERSPACE:
 			default:
 				configureDialogView = layoutInflater.inflate(R.layout.configure_governor_userspace_dialog, null);
