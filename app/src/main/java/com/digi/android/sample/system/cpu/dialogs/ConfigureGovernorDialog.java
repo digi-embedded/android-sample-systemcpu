@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -25,9 +25,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.digi.android.sample.system.cpu.R;
+
 import com.digi.android.system.cpu.CPUManager;
 import com.digi.android.system.cpu.GovernorType;
-import com.digi.android.sample.system.cpu.R;
 
 public abstract class ConfigureGovernorDialog {
 
@@ -36,15 +37,15 @@ public abstract class ConfigureGovernorDialog {
 
 	private TextView statusText;
 
-	protected View configureDialogView;
+	View configureDialogView;
 
 	private AlertDialog configureDialog;
 
 	private GovernorType governorType;
 
-	protected CPUManager cpuManager;
+	CPUManager cpuManager;
 
-	public ConfigureGovernorDialog(Context context, GovernorType governorType, CPUManager cpuManager) {
+	ConfigureGovernorDialog(Context context, GovernorType governorType, CPUManager cpuManager) {
 		this.context = context;
 		this.governorType = governorType;
 		this.cpuManager = cpuManager;
@@ -72,7 +73,7 @@ public abstract class ConfigureGovernorDialog {
 	/**
 	 * Configures the layout of the governor configuration dialog.
 	 */
-	protected void setupLayout() {
+	private void setupLayout() {
 		// Create the layout.
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 		switch (governorType) {
@@ -161,7 +162,7 @@ public abstract class ConfigureGovernorDialog {
 		configureDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(errorMessage == null);
 	}
 
-	protected TextWatcher textWatcher = new TextWatcher() {
+	private TextWatcher textWatcher = new TextWatcher() {
 		@Override
 		public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
@@ -173,6 +174,15 @@ public abstract class ConfigureGovernorDialog {
 			validateDialog();
 		}
 	};
+
+	/**
+	 * Returns a default text watcher.
+	 *
+	 * @return The default text watcher.
+	 */
+	protected TextWatcher getTextWatcher() {
+		return textWatcher;
+	}
 
 	/**
 	 * Initializes the specific settings controls of the corresponding governor type.

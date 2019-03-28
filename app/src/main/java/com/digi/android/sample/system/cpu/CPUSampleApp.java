@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -48,11 +48,6 @@ import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
-import com.digi.android.system.cpu.CPUManager;
-import com.digi.android.system.cpu.GovernorType;
-import com.digi.android.system.cpu.exception.CPUException;
-import com.digi.android.system.cpu.exception.CPUTemperatureException;
-import com.digi.android.system.cpu.exception.NoSuchCoreException;
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorConservativeDialog;
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorDialog;
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorInteractiveDialog;
@@ -60,11 +55,17 @@ import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorOndemandDialo
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorUserspaceDialog;
 import com.digi.android.sample.system.cpu.pi.Pi;
 import com.digi.android.sample.system.cpu.pi.PiParallel;
+import com.digi.android.system.cpu.CPUManager;
+import com.digi.android.system.cpu.GovernorType;
+import com.digi.android.system.cpu.exception.CPUException;
+import com.digi.android.system.cpu.exception.CPUTemperatureException;
+import com.digi.android.system.cpu.exception.NoSuchCoreException;
 import com.digi.android.system.memory.MemoryManager;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -218,33 +219,33 @@ public class CPUSampleApp extends Activity {
 		memoryManager = new MemoryManager(this);
 
 		// Declare views by retrieving them with the ID.
-		piTimeText = (TextView) findViewById(R.id.pi_total_time);
-		piProgressText = (TextView) findViewById(R.id.pi_progress);
-		statusTemperatureText = (TextView) findViewById(R.id.status_temperature);
-		statusUsageText = (TextView) findViewById(R.id.status_usage);
-		statusFreqText = (TextView) findViewById(R.id.status_frequency);
-		statusMemoryText = (TextView) findViewById(R.id.status_memory);
+		piTimeText = findViewById(R.id.pi_total_time);
+		piProgressText = findViewById(R.id.pi_progress);
+		statusTemperatureText = findViewById(R.id.status_temperature);
+		statusUsageText = findViewById(R.id.status_usage);
+		statusFreqText = findViewById(R.id.status_frequency);
+		statusMemoryText = findViewById(R.id.status_memory);
 
-		piDigitsEditText = (EditText) findViewById(R.id.pi_digits);
+		piDigitsEditText = findViewById(R.id.pi_digits);
 
-		core1Switch = (Switch) findViewById(R.id.core1_switch);
-		core2Switch = (Switch) findViewById(R.id.core2_switch);
-		core3Switch = (Switch) findViewById(R.id.core3_switch);
-		core4Switch = (Switch) findViewById(R.id.core4_switch);
+		core1Switch = findViewById(R.id.core1_switch);
+		core2Switch = findViewById(R.id.core2_switch);
+		core3Switch = findViewById(R.id.core3_switch);
+		core4Switch = findViewById(R.id.core4_switch);
 
-		maxFrequencySpinner = (Spinner) findViewById(R.id.setting_max_freq_list);
-		minFrequencySpinner = (Spinner) findViewById(R.id.setting_min_freq_list);
-		governorsSpinner = (Spinner) findViewById(R.id.setting_governors_list);
+		maxFrequencySpinner = findViewById(R.id.setting_max_freq_list);
+		minFrequencySpinner = findViewById(R.id.setting_min_freq_list);
+		governorsSpinner = findViewById(R.id.setting_governors_list);
 
-		configureGovernorButton = (Button) findViewById(R.id.setting_config_governor_button);
-		piResultsButton = (Button) findViewById(R.id.results_button);
+		configureGovernorButton = findViewById(R.id.setting_config_governor_button);
+		piResultsButton = findViewById(R.id.results_button);
 
-		piCalculationButton = (ToggleButton) findViewById(R.id.start_calc_button);
+		piCalculationButton = findViewById(R.id.start_calc_button);
 
-		core1CheckBox = (CheckBox) findViewById(R.id.track_core1_button);
-		core2CheckBox = (CheckBox) findViewById(R.id.track_core2_button);
-		core3CheckBox = (CheckBox) findViewById(R.id.track_core3_button);
-		core4CheckBox = (CheckBox) findViewById(R.id.track_core4_button);
+		core1CheckBox = findViewById(R.id.track_core1_button);
+		core2CheckBox = findViewById(R.id.track_core2_button);
+		core3CheckBox = findViewById(R.id.track_core3_button);
+		core4CheckBox = findViewById(R.id.track_core4_button);
 	}
 
 	/**
@@ -448,7 +449,7 @@ public class CPUSampleApp extends Activity {
 	 * Initializes and configures the CPU plot and series.
 	 */
 	private void initializeCPUUsagePlot() {
-		cpuPlot = (XYPlot)findViewById(R.id.cpu_usage_plot);
+		cpuPlot = findViewById(R.id.cpu_usage_plot);
 
 		cpuPlot.setRangeBoundaries(0, 100, BoundaryMode.FIXED);
 		cpuPlot.setDomainBoundaries(0, 60, BoundaryMode.FIXED);
@@ -785,7 +786,7 @@ public class CPUSampleApp extends Activity {
 							@Override
 							public void run() {
 								piProgressText.setText(PI_STATUS_FINISHED);
-								piTimeText.setText(String.format("%.2f s", elapsed / 1000.0));
+								piTimeText.setText(String.format(Locale.getDefault(), "%.2f s", elapsed / 1000.0));
 								piResultsButton.setEnabled(true);
 								piCalculationButton.setChecked(false);
 							}
@@ -934,10 +935,10 @@ public class CPUSampleApp extends Activity {
 							} catch (CPUException | CPUTemperatureException | IOException e) {
 								e.printStackTrace();
 							}
-							statusTemperatureText.setText(String.format("%.2f °C", temperature));
-							statusUsageText.setText(String.format("%.2f %%", overallUsage));
-							statusFreqText.setText(String.format("%d kHz", currentFrequency));
-							statusMemoryText.setText(String.format("%d / %d kB", memory, totalMemory));
+							statusTemperatureText.setText(String.format(Locale.getDefault(), "%.2f °C", temperature));
+							statusUsageText.setText(String.format(Locale.getDefault(),"%.2f %%", overallUsage));
+							statusFreqText.setText(String.format(Locale.getDefault(),"%d kHz", currentFrequency));
+							statusMemoryText.setText(String.format(Locale.getDefault(),"%d / %d kB", memory, totalMemory));
 						}
 					}
 				});
@@ -961,12 +962,14 @@ public class CPUSampleApp extends Activity {
 	private class ProgressReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String progress = intent.getExtras().getString("progress");
+			Bundle b = intent.getExtras();
+			String progress = b != null ? b.getString("progress") : null;
 			if (progress != null) {
 				piProgressText.setText(progress.equals("100%") ? "Finishing..." : progress);
 			}
-			if (intent.getExtras().getString("result") != null)
-				pi = intent.getExtras().getString("result");
+			String result = b != null ? b.getString("result") : null;
+			if (result != null)
+				pi = result;
 		}
 	}
 

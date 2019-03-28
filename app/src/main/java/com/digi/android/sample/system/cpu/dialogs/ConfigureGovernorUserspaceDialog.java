@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -18,12 +18,12 @@ package com.digi.android.sample.system.cpu.dialogs;
 
 import android.content.Context;
 import android.widget.EditText;
+import com.digi.android.sample.system.cpu.R;
 
 import com.digi.android.system.cpu.CPUManager;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
 import com.digi.android.system.cpu.exception.UnsupportedCommandException;
-import com.digi.android.sample.system.cpu.R;
 
 public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 
@@ -41,7 +41,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 
 	@Override
 	protected void initializeControls() {
-		customFreqEditText = (EditText)configureDialogView.findViewById(R.id.userspace_custom_freq);
+		customFreqEditText = configureDialogView.findViewById(R.id.userspace_custom_freq);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 		}
 
 		// Add the text change listeners to the edit text controls.
-		customFreqEditText.addTextChangedListener(textWatcher);
+		customFreqEditText.addTextChangedListener(getTextWatcher());
 	}
 
 	@Override

@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -20,11 +20,12 @@ import android.content.Context;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import com.digi.android.sample.system.cpu.R;
+
 import com.digi.android.system.cpu.CPUManager;
 import com.digi.android.system.cpu.GovernorInteractive;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
-import com.digi.android.sample.system.cpu.R;
 
 public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog {
 
@@ -70,15 +71,15 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 	@Override
 	protected void initializeControls() {
-		minSampleRateEditText = (EditText)configureDialogView.findViewById(R.id.interactive_min_sample_time);
-		hiSpeedFreqEditText = (EditText)configureDialogView.findViewById(R.id.interactive_hi_speed_freq);
-		goHiSpeedLoadEditText = (EditText)configureDialogView.findViewById(R.id.interactive_go_hi_speed_load);
-		aboveHiSpeedDelayEditText = (EditText)configureDialogView.findViewById(R.id.interactive_above_hi_speed_delay);
-		timerRateEditText = (EditText)configureDialogView.findViewById(R.id.interactive_timer_rate);
-		timerSlackEditText = (EditText)configureDialogView.findViewById(R.id.interactive_timer_slack);
-		boostPulseDurationEditText = (EditText)configureDialogView.findViewById(R.id.interactive_boost_pulse_duration);
+		minSampleRateEditText = configureDialogView.findViewById(R.id.interactive_min_sample_time);
+		hiSpeedFreqEditText = configureDialogView.findViewById(R.id.interactive_hi_speed_freq);
+		goHiSpeedLoadEditText = configureDialogView.findViewById(R.id.interactive_go_hi_speed_load);
+		aboveHiSpeedDelayEditText = configureDialogView.findViewById(R.id.interactive_above_hi_speed_delay);
+		timerRateEditText = configureDialogView.findViewById(R.id.interactive_timer_rate);
+		timerSlackEditText = configureDialogView.findViewById(R.id.interactive_timer_slack);
+		boostPulseDurationEditText = configureDialogView.findViewById(R.id.interactive_boost_pulse_duration);
 
-		boostSwitch = (Switch)configureDialogView.findViewById(R.id.interactive_boost);
+		boostSwitch = configureDialogView.findViewById(R.id.interactive_boost);
 	}
 
 	@Override
@@ -152,13 +153,13 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		}
 
 		// Add the text change listeners to the edit text controls.
-		minSampleRateEditText.addTextChangedListener(textWatcher);
-		hiSpeedFreqEditText.addTextChangedListener(textWatcher);
-		goHiSpeedLoadEditText.addTextChangedListener(textWatcher);
-		aboveHiSpeedDelayEditText.addTextChangedListener(textWatcher);
-		timerRateEditText.addTextChangedListener(textWatcher);
-		timerSlackEditText.addTextChangedListener(textWatcher);
-		boostPulseDurationEditText.addTextChangedListener(textWatcher);
+		minSampleRateEditText.addTextChangedListener(getTextWatcher());
+		hiSpeedFreqEditText.addTextChangedListener(getTextWatcher());
+		goHiSpeedLoadEditText.addTextChangedListener(getTextWatcher());
+		aboveHiSpeedDelayEditText.addTextChangedListener(getTextWatcher());
+		timerRateEditText.addTextChangedListener(getTextWatcher());
+		timerSlackEditText.addTextChangedListener(getTextWatcher());
+		boostPulseDurationEditText.addTextChangedListener(getTextWatcher());
 	}
 
 	@Override

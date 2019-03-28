@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -21,11 +21,12 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.digi.android.sample.system.cpu.R;
+
 import com.digi.android.system.cpu.CPUManager;
 import com.digi.android.system.cpu.GovernorConservative;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
-import com.digi.android.sample.system.cpu.R;
 
 public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog {
 
@@ -67,15 +68,15 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 
 	@Override
 	protected void initializeControls() {
-		samplingRateEditText = (EditText)configureDialogView.findViewById(R.id.ondemand_sampling_rate);
-		upThresholdEditText = (EditText)configureDialogView.findViewById(R.id.ondemand_up_threshold);
-		samplingDownFactorEditText = (EditText)configureDialogView.findViewById(R.id.ondemand_sampling_down_factor);
-		downThresholdEditText = (EditText)configureDialogView.findViewById(R.id.conservative_down_threshold);
-		freqStepEditText = (EditText)configureDialogView.findViewById(R.id.conservative_freq_step);
+		samplingRateEditText = configureDialogView.findViewById(R.id.ondemand_sampling_rate);
+		upThresholdEditText = configureDialogView.findViewById(R.id.ondemand_up_threshold);
+		samplingDownFactorEditText = configureDialogView.findViewById(R.id.ondemand_sampling_down_factor);
+		downThresholdEditText = configureDialogView.findViewById(R.id.conservative_down_threshold);
+		freqStepEditText = configureDialogView.findViewById(R.id.conservative_freq_step);
 
-		minSamplingRateTextView = (TextView)configureDialogView.findViewById(R.id.ondemand_min_sampling_rate);
+		minSamplingRateTextView = configureDialogView.findViewById(R.id.ondemand_min_sampling_rate);
 
-		ignoreNiceLoadSwitch = (Switch)configureDialogView.findViewById(R.id.ondemand_ignore_nice_load);
+		ignoreNiceLoadSwitch = configureDialogView.findViewById(R.id.ondemand_ignore_nice_load);
 	}
 
 	@Override
@@ -140,11 +141,11 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		}
 
 		// Add the text change listeners to the edit text controls.
-		samplingRateEditText.addTextChangedListener(textWatcher);
-		upThresholdEditText.addTextChangedListener(textWatcher);
-		samplingDownFactorEditText.addTextChangedListener(textWatcher);
-		downThresholdEditText.addTextChangedListener(textWatcher);
-		freqStepEditText.addTextChangedListener(textWatcher);
+		samplingRateEditText.addTextChangedListener(getTextWatcher());
+		upThresholdEditText.addTextChangedListener(getTextWatcher());
+		samplingDownFactorEditText.addTextChangedListener(getTextWatcher());
+		downThresholdEditText.addTextChangedListener(getTextWatcher());
+		freqStepEditText.addTextChangedListener(getTextWatcher());
 	}
 
 	@Override

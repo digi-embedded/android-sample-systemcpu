@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -21,11 +21,12 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.digi.android.sample.system.cpu.R;
+
 import com.digi.android.system.cpu.CPUManager;
 import com.digi.android.system.cpu.GovernorOnDemand;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
-import com.digi.android.sample.system.cpu.R;
 
 public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 
@@ -61,13 +62,13 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 
 	@Override
 	protected void initializeControls() {
-		samplingRateEditText = (EditText)configureDialogView.findViewById(R.id.ondemand_sampling_rate);
-		upThresholdEditText = (EditText)configureDialogView.findViewById(R.id.ondemand_up_threshold);
-		samplingDownFactorEditText = (EditText)configureDialogView.findViewById(R.id.ondemand_sampling_down_factor);
+		samplingRateEditText = configureDialogView.findViewById(R.id.ondemand_sampling_rate);
+		upThresholdEditText = configureDialogView.findViewById(R.id.ondemand_up_threshold);
+		samplingDownFactorEditText = configureDialogView.findViewById(R.id.ondemand_sampling_down_factor);
 
-		minSamplingRateTextView = (TextView)configureDialogView.findViewById(R.id.ondemand_min_sampling_rate);
+		minSamplingRateTextView = configureDialogView.findViewById(R.id.ondemand_min_sampling_rate);
 
-		ignoreNiceLoadSwitch = (Switch)configureDialogView.findViewById(R.id.ondemand_ignore_nice_load);
+		ignoreNiceLoadSwitch = configureDialogView.findViewById(R.id.ondemand_ignore_nice_load);
 	}
 
 	@Override
@@ -116,9 +117,9 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		}
 
 		// Add the text change listeners to the edit text controls.
-		samplingRateEditText.addTextChangedListener(textWatcher);
-		upThresholdEditText.addTextChangedListener(textWatcher);
-		samplingDownFactorEditText.addTextChangedListener(textWatcher);
+		samplingRateEditText.addTextChangedListener(getTextWatcher());
+		upThresholdEditText.addTextChangedListener(getTextWatcher());
+		samplingDownFactorEditText.addTextChangedListener(getTextWatcher());
 	}
 
 	@Override
