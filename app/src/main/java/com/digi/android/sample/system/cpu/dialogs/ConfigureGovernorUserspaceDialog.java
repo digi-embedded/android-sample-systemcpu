@@ -17,13 +17,17 @@
 package com.digi.android.sample.system.cpu.dialogs;
 
 import android.content.Context;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
 import com.digi.android.sample.system.cpu.R;
 
 import com.digi.android.system.cpu.CPUManager;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
 import com.digi.android.system.cpu.exception.UnsupportedCommandException;
+
+import java.util.ArrayList;
 
 public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 
@@ -33,7 +37,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 	private static final String ERROR_CUSTOM_FREQ_INVALID = "Invalid 'Custom frequency' value.";
 
 	// Variables.
-	private EditText customFreqEditText;
+	private Spinner customFreqSpinner;
 
 	public ConfigureGovernorUserspaceDialog(Context context, CPUManager cpuManager) {
 		super(context, GovernorType.USERSPACE, cpuManager);
@@ -41,27 +45,35 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 
 	@Override
 	protected void initializeControls() {
-		customFreqEditText = configureDialogView.findViewById(R.id.userspace_custom_freq);
+		customFreqSpinner = configureDialogView.findViewById(R.id.userspace_custom_freq);
 	}
 
 	@Override
-	protected void initializeValues() {
-		// Custom frequency setting.
+	protected void initializeValues(Context context) {
+		// Get the available frequencies and fill the frequencies list.
+		ArrayAdapter<Integer> frequenciesAdapter;
 		try {
-			int customFreq = cpuManager.getFrequency();
-			customFreqEditText.setText(String.valueOf(customFreq));
+			ArrayList<Integer> frequencies = cpuManager.getAvailableFrequencies();
+			frequenciesAdapter = new ArrayAdapter<>(context, R.layout.spinner_item, frequencies);
+			frequenciesAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+			customFreqSpinner.setAdapter(frequenciesAdapter);
+
+			// Configure the selected custom frequency.
+			Integer customFreq = cpuManager.getFrequency();
+			if (frequenciesAdapter.getPosition(customFreq) != -1)
+				customFreqSpinner.setSelection(frequenciesAdapter.getPosition(customFreq));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
 
-		// Add the text change listeners to the edit text controls.
-		customFreqEditText.addTextChangedListener(getTextWatcher());
+		// Add the selection listeners to the spinner control.
+		customFreqSpinner.setOnItemSelectedListener(getSelectedItemListener());
 	}
 
 	@Override
 	protected void applyValues() {
 		// Custom frequency setting.
-		String customFreqValue = customFreqEditText.getText().toString();
+		String customFreqValue = customFreqSpinner.getSelectedItem().toString();
 		int customFreq;
 		try {
 			customFreq = Integer.parseInt(customFreqValue.trim());
@@ -74,7 +86,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 	@Override
 	protected String validateSettings() {
 		// Custom frequency value.
-		String customFreqValue = customFreqEditText.getText().toString();
+		String customFreqValue = customFreqSpinner.getSelectedItem().toString();
 		if (customFreqValue.trim().length() == 0)
 			return ERROR_CUSTOM_FREQ_EMPTY;
 		try {

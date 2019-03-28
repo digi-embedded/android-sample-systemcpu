@@ -80,7 +80,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 	}
 
 	@Override
-	protected void initializeValues() {
+	protected void initializeValues(Context context) {
 		if (governorConservative == null)
 			return;
 

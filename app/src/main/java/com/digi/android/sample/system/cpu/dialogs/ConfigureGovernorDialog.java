@@ -23,6 +23,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.digi.android.sample.system.cpu.R;
@@ -60,7 +61,7 @@ public abstract class ConfigureGovernorDialog {
 	public void show() {
 		// Reset the value.
 		createDialog();
-		initializeValues();
+		initializeValues(context);
 
 		configureDialog.show();
 
@@ -184,6 +185,25 @@ public abstract class ConfigureGovernorDialog {
 		return textWatcher;
 	}
 
+	private AdapterView.OnItemSelectedListener selectedItemListener = new AdapterView.OnItemSelectedListener() {
+		@Override
+		public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			validateDialog();
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parentView) { }
+	};
+
+	/**
+	 * Returns a default selectedItemListener.
+	 *
+	 * @return The default selected item listener.
+	 */
+	protected AdapterView.OnItemSelectedListener getSelectedItemListener() {
+		return selectedItemListener;
+	}
+
 	/**
 	 * Initializes the specific settings controls of the corresponding governor type.
 	 */
@@ -192,8 +212,10 @@ public abstract class ConfigureGovernorDialog {
 	/**
 	 * Initializes (reads and sets) the configuration values of the governor in the corresponding
 	 * settings fields.
+	 *
+	 * @param context The context
 	 */
-	protected abstract void initializeValues();
+	protected abstract void initializeValues(Context context);
 
 	/**
 	 * Applies (writes) the configured values of the governor from the configuration fields.

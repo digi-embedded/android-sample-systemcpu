@@ -17,7 +17,9 @@
 package com.digi.android.sample.system.cpu.dialogs;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.digi.android.sample.system.cpu.R;
@@ -26,6 +28,8 @@ import com.digi.android.system.cpu.CPUManager;
 import com.digi.android.system.cpu.GovernorInteractive;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
+
+import java.util.ArrayList;
 
 public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog {
 
@@ -48,7 +52,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 	// Variables.
 	private EditText minSampleRateEditText;
-	private EditText hiSpeedFreqEditText;
+	private Spinner hiSpeedFreqSpinner;
 	private EditText goHiSpeedLoadEditText;
 	private EditText aboveHiSpeedDelayEditText;
 	private EditText timerRateEditText;
@@ -72,7 +76,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 	@Override
 	protected void initializeControls() {
 		minSampleRateEditText = configureDialogView.findViewById(R.id.interactive_min_sample_time);
-		hiSpeedFreqEditText = configureDialogView.findViewById(R.id.interactive_hi_speed_freq);
+		hiSpeedFreqSpinner = configureDialogView.findViewById(R.id.interactive_hi_speed_freq);
 		goHiSpeedLoadEditText = configureDialogView.findViewById(R.id.interactive_go_hi_speed_load);
 		aboveHiSpeedDelayEditText = configureDialogView.findViewById(R.id.interactive_above_hi_speed_delay);
 		timerRateEditText = configureDialogView.findViewById(R.id.interactive_timer_rate);
@@ -83,7 +87,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 	}
 
 	@Override
-	protected void initializeValues() {
+	protected void initializeValues(Context context) {
 		if (governorInteractive == null)
 			return;
 
@@ -96,9 +100,18 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		}
 
 		// High speed frequency setting.
+		ArrayAdapter<Integer> frequenciesAdapter;
 		try {
-			int hiSpeedFreq = governorInteractive.getHiSpeedFreq();
-			hiSpeedFreqEditText.setText(String.valueOf(hiSpeedFreq));
+			// Get the available frequencies and fill the frequencies list.
+			ArrayList<Integer> frequencies = cpuManager.getAvailableFrequencies();
+			frequenciesAdapter = new ArrayAdapter<>(context, R.layout.spinner_item, frequencies);
+			frequenciesAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+			hiSpeedFreqSpinner.setAdapter(frequenciesAdapter);
+
+			// Configure the selected High frequency.
+			Integer hiSpeedFreq = governorInteractive.getHiSpeedFreq();
+			if (frequenciesAdapter.getPosition(hiSpeedFreq) != -1)
+				hiSpeedFreqSpinner.setSelection(frequenciesAdapter.getPosition(hiSpeedFreq));
 		} catch (CPUException e) {
 			e.printStackTrace();
 		}
@@ -154,7 +167,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Add the text change listeners to the edit text controls.
 		minSampleRateEditText.addTextChangedListener(getTextWatcher());
-		hiSpeedFreqEditText.addTextChangedListener(getTextWatcher());
+		hiSpeedFreqSpinner.setOnItemSelectedListener(getSelectedItemListener());
 		goHiSpeedLoadEditText.addTextChangedListener(getTextWatcher());
 		aboveHiSpeedDelayEditText.addTextChangedListener(getTextWatcher());
 		timerRateEditText.addTextChangedListener(getTextWatcher());
@@ -178,7 +191,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		}
 
 		// High speed frequency setting.
-		String hiSpeedFreqValue = hiSpeedFreqEditText.getText().toString();
+		String hiSpeedFreqValue = hiSpeedFreqSpinner.getSelectedItem().toString();
 		int hiSpeedFreq;
 		try {
 			hiSpeedFreq = Integer.parseInt(hiSpeedFreqValue.trim());
@@ -263,7 +276,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		}
 
 		// High speed frequency value.
-		String hiSpeedFreqValue = hiSpeedFreqEditText.getText().toString();
+		String hiSpeedFreqValue = hiSpeedFreqSpinner.getSelectedItem().toString();
 		if (hiSpeedFreqValue.trim().length() == 0)
 			return ERROR_HI_SPEED_FREQ_EMPTY;
 		try {

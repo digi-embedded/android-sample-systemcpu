@@ -72,7 +72,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 	}
 
 	@Override
-	protected void initializeValues() {
+	protected void initializeValues(Context context ) {
 		if (governorOnDemand == null)
 			return;
 
