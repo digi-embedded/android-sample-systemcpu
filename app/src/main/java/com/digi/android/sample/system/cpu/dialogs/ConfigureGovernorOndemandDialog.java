@@ -28,6 +28,8 @@ import com.digi.android.system.cpu.GovernorOnDemand;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
 
+import java.util.Locale;
+
 public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 
 	// Constants.
@@ -178,7 +180,8 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 			Long longVar = Long.parseLong(samplingRateValue.trim());
 			long minSampleRate = governorOnDemand.getMinSamplingRate();
 			if (longVar < minSampleRate || longVar > GovernorOnDemand.MAX_SAMPLING_RATE)
-				return ERROR_SAMPLING_RATE_INVALID;
+				return ERROR_SAMPLING_RATE_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, minSampleRate, GovernorOnDemand.MAX_SAMPLING_RATE);
 		} catch (CPUException | NumberFormatException e) {
 			return ERROR_SAMPLING_RATE_INVALID;
 		}
@@ -190,7 +193,8 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		try {
 			int intVar = Integer.parseInt(upThresholdValue.trim());
 			if (intVar <= GovernorOnDemand.MIN_UP_THRESHOLD || intVar > 100)
-				return ERROR_UP_THRESHOLD_INVALID;
+				return ERROR_UP_THRESHOLD_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, GovernorOnDemand.MIN_UP_THRESHOLD, 100);
 		} catch (NumberFormatException e) {
 			return ERROR_UP_THRESHOLD_INVALID;
 		}
@@ -202,7 +206,8 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());
 			if (intVar < 1 || intVar > GovernorOnDemand.MAX_SAMPLING_DOWN_FACTOR)
-				return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
+				return ERROR_SAMPLING_DOWN_FACTOR_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, 1, GovernorOnDemand.MAX_SAMPLING_DOWN_FACTOR);
 		} catch (NumberFormatException e) {
 			return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
 		}

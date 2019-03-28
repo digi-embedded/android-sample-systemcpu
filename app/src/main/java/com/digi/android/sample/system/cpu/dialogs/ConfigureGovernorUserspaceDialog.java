@@ -92,7 +92,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 		try {
 			int intVar = Integer.parseInt(customFreqValue.trim());
 			if (!cpuManager.getAvailableFrequencies().contains(intVar))
-				return ERROR_CUSTOM_FREQ_INVALID;
+				return ERROR_CUSTOM_FREQ_INVALID + " Value must be an available frequency";
 		} catch (CPUException | NumberFormatException e) {
 			return ERROR_CUSTOM_FREQ_INVALID;
 		}

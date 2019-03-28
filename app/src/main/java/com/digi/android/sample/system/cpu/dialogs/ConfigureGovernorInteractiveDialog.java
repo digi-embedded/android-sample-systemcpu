@@ -30,6 +30,7 @@ import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog {
 
@@ -270,7 +271,8 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			Long longVar = Long.parseLong(minSampleRateValue.trim());
 			if (longVar < 0 || longVar > GovernorInteractive.MAX_MIN_SAMPLE_TIME)
-				return ERROR_MIN_SAMPLE_RATE_INVALID;
+				return ERROR_MIN_SAMPLE_RATE_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, GovernorInteractive.MAX_MIN_SAMPLE_TIME);
 		} catch (NumberFormatException e) {
 			return ERROR_MIN_SAMPLE_RATE_INVALID;
 		}
@@ -282,7 +284,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			int intVar = Integer.parseInt(hiSpeedFreqValue.trim());
 			if (!cpuManager.getAvailableFrequencies().contains(intVar))
-				return ERROR_HI_SPEED_FREQ_INVALID;
+				return ERROR_HI_SPEED_FREQ_INVALID + " Value must be an available frequency";
 		} catch (CPUException | NumberFormatException e) {
 			return ERROR_HI_SPEED_FREQ_INVALID;
 		}
@@ -294,7 +296,8 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			int intVar = Integer.parseInt(goHiSpeedLoadValue.trim());
 			if (intVar < 0 || intVar > 100)
-				return ERROR_GO_HI_SPEED_LOAD_INVALID;
+				return ERROR_GO_HI_SPEED_LOAD_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, 100);
 		} catch (NumberFormatException e) {
 			return ERROR_GO_HI_SPEED_LOAD_INVALID;
 		}
@@ -306,7 +309,8 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			Long longVar = Long.parseLong(aboveHiSpeedDelayValue.trim());
 			if (longVar < 0 || longVar > GovernorInteractive.MAX_ABOVE_HIGH_SPEED_DELAY)
-				return ERROR_ABOVE_HI_SPEED_DELAY_INVALID;
+				return ERROR_ABOVE_HI_SPEED_DELAY_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, GovernorInteractive.MAX_ABOVE_HIGH_SPEED_DELAY);
 		} catch (NumberFormatException e) {
 			return ERROR_ABOVE_HI_SPEED_DELAY_INVALID;
 		}
@@ -318,7 +322,8 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			Long longVar = Long.parseLong(timerRateValue.trim());
 			if (longVar < 0 || longVar > GovernorInteractive.MAX_TIMER_RATE)
-				return ERROR_TIMER_RATE_INVALID;
+				return ERROR_TIMER_RATE_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, GovernorInteractive.MAX_TIMER_RATE);
 		} catch (NumberFormatException e) {
 			return ERROR_TIMER_RATE_INVALID;
 		}
@@ -330,7 +335,8 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			Long longVar = Long.parseLong(timerSlackValue.trim());
 			if (longVar < -1 || longVar > GovernorInteractive.MAX_TIMER_SLACK)
-				return ERROR_TIMER_SLACK_INVALID;
+				return ERROR_TIMER_SLACK_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, -1, GovernorInteractive.MAX_TIMER_SLACK);
 		} catch (NumberFormatException e) {
 			return ERROR_TIMER_SLACK_INVALID;
 		}
@@ -342,7 +348,8 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		try {
 			Long longVar = Long.parseLong(boostPulseDurationValue.trim());
 			if (longVar < 0 || longVar > GovernorInteractive.MAX_BOOSTPULSE_DURATION)
-				return ERROR_BOOST_PULSE_DURATION_INVALID;
+				return ERROR_BOOST_PULSE_DURATION_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, GovernorInteractive.MAX_BOOSTPULSE_DURATION);
 		} catch (NumberFormatException e) {
 			return ERROR_BOOST_PULSE_DURATION_INVALID;
 		}

@@ -28,6 +28,8 @@ import com.digi.android.system.cpu.GovernorConservative;
 import com.digi.android.system.cpu.GovernorType;
 import com.digi.android.system.cpu.exception.CPUException;
 
+import java.util.Locale;
+
 public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog {
 
 	// Constants.
@@ -224,7 +226,8 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 			Long longVar = Long.parseLong(samplingRateValue.trim());
 			long minSampleRate = governorConservative.getMinSamplingRate();
 			if (longVar < minSampleRate || longVar > GovernorConservative.MAX_SAMPLING_RATE)
-				return ERROR_SAMPLING_RATE_INVALID;
+				return ERROR_SAMPLING_RATE_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, minSampleRate, GovernorConservative.MAX_SAMPLING_RATE);
 		} catch (NumberFormatException | CPUException e) {
 			return ERROR_SAMPLING_RATE_INVALID;
 		}
@@ -253,11 +256,13 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 
 		// Up threshold limits.
 		if (upThr <= downThr || upThr > 100)
-			return ERROR_UP_THRESHOLD_INVALID;
+			return ERROR_UP_THRESHOLD_INVALID + " "
+					+ String.format(Locale.getDefault(), ERROR_LIMITS, downThr, 100);
 
 		// Down threshold limits.
 		if (downThr < GovernorConservative.MIN_DOWN_THRESHOLD || downThr >= upThr)
-			return ERROR_DOWN_THRESHOLD_INVALID;
+			return ERROR_DOWN_THRESHOLD_INVALID + " "
+					+ String.format(Locale.getDefault(), ERROR_LIMITS, GovernorConservative.MIN_DOWN_THRESHOLD, upThr);
 
 
 		// Sampling down factor value.
@@ -267,7 +272,8 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());
 			if (intVar < 1 || intVar > GovernorConservative.MAX_SAMPLING_DOWN_FACTOR)
-				return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
+				return ERROR_SAMPLING_DOWN_FACTOR_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, 1, GovernorConservative.MAX_SAMPLING_DOWN_FACTOR);
 		} catch (NumberFormatException e) {
 			return ERROR_SAMPLING_DOWN_FACTOR_INVALID;
 		}
@@ -279,7 +285,8 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		try {
 			int intVar = Integer.parseInt(freqStepValue.trim());
 			if (intVar < 0 || intVar > 100)
-				return ERROR_FREQ_STEP_INVALID;
+				return ERROR_FREQ_STEP_INVALID + " "
+						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, 100);
 		} catch (NumberFormatException e) {
 			return ERROR_FREQ_STEP_INVALID;
 		}

@@ -33,6 +33,9 @@ import com.digi.android.system.cpu.GovernorType;
 
 public abstract class ConfigureGovernorDialog {
 
+	// Constants.
+	static final String ERROR_LIMITS = "Value must be between %d and %d.";
+
 	// Variables.
 	private Context context;
 
