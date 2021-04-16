@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2019-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -113,7 +113,7 @@ public class ConfigureGovernorSchedutilDialog extends ConfigureGovernorDialog {
         if (downRateLimitValue.trim().length() == 0)
             return String.format(ERROR_RATE_LIMIT_EMPTY, "Down");
         try {
-            Long longVar = Long.parseLong(downRateLimitValue.trim());
+            long longVar = Long.parseLong(downRateLimitValue.trim());
             if (longVar < GovernorSchedUtil.MIN_RATE_LIMIT || longVar > GovernorSchedUtil.MAX_RATE_LIMIT)
                 return String.format(ERROR_RATE_LIMIT_INVALID, "Down") + " "
                         + String.format(Locale.getDefault(), ERROR_RATE_LIMIT_LIMITS, GovernorSchedUtil.MIN_RATE_LIMIT, GovernorSchedUtil.MAX_RATE_LIMIT);
@@ -126,7 +126,7 @@ public class ConfigureGovernorSchedutilDialog extends ConfigureGovernorDialog {
         if (upRateLimitValue.trim().length() == 0)
             return String.format(ERROR_RATE_LIMIT_EMPTY, "Up");
         try {
-            Long longVar = Long.parseLong(upRateLimitValue.trim());
+            long longVar = Long.parseLong(upRateLimitValue.trim());
             if (longVar < GovernorSchedUtil.MIN_RATE_LIMIT || longVar > GovernorSchedUtil.MAX_RATE_LIMIT)
                 return String.format(ERROR_RATE_LIMIT_INVALID, "Up") + " "
                         + String.format(Locale.getDefault(), ERROR_RATE_LIMIT_LIMITS, GovernorSchedUtil.MIN_RATE_LIMIT, GovernorSchedUtil.MAX_RATE_LIMIT);

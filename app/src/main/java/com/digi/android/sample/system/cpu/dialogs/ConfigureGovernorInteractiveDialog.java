@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -269,7 +269,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		if (minSampleRateValue.trim().length() == 0)
 			return ERROR_MIN_SAMPLE_RATE_EMPTY;
 		try {
-			Long longVar = Long.parseLong(minSampleRateValue.trim());
+			long longVar = Long.parseLong(minSampleRateValue.trim());
 			if (longVar < 0 || longVar > GovernorInteractive.MAX_MIN_SAMPLE_TIME)
 				return ERROR_MIN_SAMPLE_RATE_INVALID + " "
 						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, GovernorInteractive.MAX_MIN_SAMPLE_TIME);
@@ -307,7 +307,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		if (aboveHiSpeedDelayValue.trim().length() == 0)
 			return ERROR_ABOVE_HI_SPEED_DELAY_EMPTY;
 		try {
-			Long longVar = Long.parseLong(aboveHiSpeedDelayValue.trim());
+			long longVar = Long.parseLong(aboveHiSpeedDelayValue.trim());
 			if (longVar < 0 || longVar > GovernorInteractive.MAX_ABOVE_HIGH_SPEED_DELAY)
 				return ERROR_ABOVE_HI_SPEED_DELAY_INVALID + " "
 						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, GovernorInteractive.MAX_ABOVE_HIGH_SPEED_DELAY);
@@ -320,7 +320,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		if (timerRateValue.trim().length() == 0)
 			return ERROR_TIMER_RATE_EMPTY;
 		try {
-			Long longVar = Long.parseLong(timerRateValue.trim());
+			long longVar = Long.parseLong(timerRateValue.trim());
 			if (longVar < 0 || longVar > GovernorInteractive.MAX_TIMER_RATE)
 				return ERROR_TIMER_RATE_INVALID + " "
 						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, GovernorInteractive.MAX_TIMER_RATE);
@@ -333,7 +333,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		if (timerSlackValue.trim().length() == 0)
 			return ERROR_TIMER_SLACK_EMPTY;
 		try {
-			Long longVar = Long.parseLong(timerSlackValue.trim());
+			long longVar = Long.parseLong(timerSlackValue.trim());
 			if (longVar < -1 || longVar > GovernorInteractive.MAX_TIMER_SLACK)
 				return ERROR_TIMER_SLACK_INVALID + " "
 						+ String.format(Locale.getDefault(), ERROR_LIMITS, -1, GovernorInteractive.MAX_TIMER_SLACK);
@@ -346,7 +346,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 		if (boostPulseDurationValue.trim().length() == 0)
 			return ERROR_BOOST_PULSE_DURATION_EMPTY;
 		try {
-			Long longVar = Long.parseLong(boostPulseDurationValue.trim());
+			long longVar = Long.parseLong(boostPulseDurationValue.trim());
 			if (longVar < 0 || longVar > GovernorInteractive.MAX_BOOSTPULSE_DURATION)
 				return ERROR_BOOST_PULSE_DURATION_INVALID + " "
 						+ String.format(Locale.getDefault(), ERROR_LIMITS, 0, GovernorInteractive.MAX_BOOSTPULSE_DURATION);

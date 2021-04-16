@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -37,7 +37,7 @@ public abstract class ConfigureGovernorDialog {
 	static final String ERROR_LIMITS = "Value must be between %d and %d.";
 
 	// Variables.
-	private Context context;
+	private final Context context;
 
 	private TextView statusText;
 
@@ -45,7 +45,7 @@ public abstract class ConfigureGovernorDialog {
 
 	private AlertDialog configureDialog;
 
-	private GovernorType governorType;
+	private final GovernorType governorType;
 
 	CPUManager cpuManager;
 
@@ -169,7 +169,7 @@ public abstract class ConfigureGovernorDialog {
 		configureDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(errorMessage == null);
 	}
 
-	private TextWatcher textWatcher = new TextWatcher() {
+	private final TextWatcher textWatcher = new TextWatcher() {
 		@Override
 		public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
@@ -191,7 +191,7 @@ public abstract class ConfigureGovernorDialog {
 		return textWatcher;
 	}
 
-	private AdapterView.OnItemSelectedListener selectedItemListener = new AdapterView.OnItemSelectedListener() {
+	private final AdapterView.OnItemSelectedListener selectedItemListener = new AdapterView.OnItemSelectedListener() {
 		@Override
 		public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 			validateDialog();

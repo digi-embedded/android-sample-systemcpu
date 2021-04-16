@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -223,7 +223,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		if (samplingRateValue.trim().length() == 0)
 			return ERROR_SAMPLING_RATE_EMPTY;
 		try {
-			Long longVar = Long.parseLong(samplingRateValue.trim());
+			long longVar = Long.parseLong(samplingRateValue.trim());
 			long minSampleRate = governorConservative.getMinSamplingRate();
 			if (longVar < minSampleRate || longVar > GovernorConservative.MAX_SAMPLING_RATE)
 				return ERROR_SAMPLING_RATE_INVALID + " "
