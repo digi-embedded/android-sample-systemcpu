@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -43,10 +43,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.androidplot.Plot;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.XYGraphWidget;
 import com.androidplot.xy.XYPlot;
 
 import com.digi.android.sample.system.cpu.dialogs.ConfigureGovernorConservativeDialog;
@@ -457,32 +457,19 @@ public class CPUSampleApp extends Activity {
 		cpuPlot.setRangeBoundaries(0, 100, BoundaryMode.FIXED);
 		cpuPlot.setDomainBoundaries(0, 60, BoundaryMode.FIXED);
 		cpuPlot.setDomainStepValue(7);
-		cpuPlot.setDomainValueFormat(new DecimalFormat("0"));
 
 		cpuPlot.setRangeStepValue(11);
-		cpuPlot.setRangeValueFormat(new DecimalFormat("0"));
 
-		cpuPlot.setPlotMargins(0, 0, 0, 0);
-		cpuPlot.setPlotPadding(-30, 0, 0, 0);
-		cpuPlot.setGridPadding(0, 0, 0, 0);
+		// Customize domain and range labels.
+		cpuPlot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.LEFT).
+				setFormat(new DecimalFormat("0"));
+		cpuPlot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM)
+				.setFormat(new DecimalFormat("0"));
 
-		cpuPlot.setBorderStyle(Plot.BorderStyle.NONE, null, null);
-		cpuPlot.setBackgroundColor(Color.TRANSPARENT);
-		cpuPlot.getGraphWidget().getBackgroundPaint().setColor(Color.TRANSPARENT);
-		cpuPlot.getGraphWidget().getGridBackgroundPaint().setColor(Color.TRANSPARENT);
-
-		cpuPlot.getGraphWidget().getDomainLabelPaint().setColor(Color.BLACK);
-		cpuPlot.getGraphWidget().getRangeLabelPaint().setColor(Color.BLACK);
-		cpuPlot.getGraphWidget().getDomainOriginLabelPaint().setColor(Color.BLACK);
-		cpuPlot.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);
-		cpuPlot.getGraphWidget().getRangeOriginLabelPaint().setColor(Color.BLACK);
-		cpuPlot.getGraphWidget().getRangeOriginLinePaint().setColor(Color.BLACK);
-		cpuPlot.getGraphWidget().setPadding(5, 5, 5, 0);
-
-		cpuPlot.getLayoutManager().remove(cpuPlot.getLegendWidget());
-		cpuPlot.getLayoutManager().remove(cpuPlot.getTitleWidget());
-		cpuPlot.getLayoutManager().remove(cpuPlot.getDomainLabelWidget());
-		cpuPlot.getLayoutManager().remove(cpuPlot.getRangeLabelWidget());
+		cpuPlot.getLayoutManager().remove(cpuPlot.getLegend());
+		cpuPlot.getLayoutManager().remove(cpuPlot.getTitle());
+		cpuPlot.getLayoutManager().remove(cpuPlot.getDomainTitle());
+		cpuPlot.getLayoutManager().remove(cpuPlot.getRangeTitle());
 
 		// CPU series (always present).
 		cpuSeries = new SimpleXYSeries("CPU Usage (%)");

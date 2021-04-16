@@ -5,3 +5,5 @@
 /build
 /*.iml
 /local.properties
+/androidplot-core-1.5.7/build/
+/figlib-1.0.7/build/

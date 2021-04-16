@@ -18,7 +18,8 @@ android {
 }
 
 dependencies {
-    implementation files('libs/androidplot-core-0.6.0.jar')
-    implementation 'com.google.firebase:firebase-appindexing:10.0.0'
+    implementation 'com.google.firebase:firebase-appindexing:19.2.0'
     implementation files('libs/apfloat.jar')
+    implementation project(path: ':androidplot-core-1.5.7')
+    implementation project(path: ':figlib-1.0.7')
 }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:baselineAligned="true"
-              android:orientation="horizontal"
-              android:padding="5dp"
-              android:background="@color/white"
-              android:weightSum="10">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="true"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:background="@color/white"
+    android:weightSum="10">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -377,10 +378,37 @@
 
                 <com.androidplot.xy.XYPlot
                     android:id="@+id/cpu_usage_plot"
+                    style="@style/APDefacto"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"/>
-
+                    android:background="@color/ap_transparent"
+                    android:padding="0dp"
+                    app:backgroundColor="@color/ap_transparent"
+                    app:gridBackgroundColor="@color/ap_transparent"
+                    app:graphBackgroundColor="@color/ap_transparent"
+                    app:domainLineColor="@color/gray"
+                    app:domainOriginLineColor="@color/dark_gray"
+                    app:rangeLineColor="@color/gray"
+                    app:rangeOriginLineColor="@color/dark_gray"
+                    app:paddingTop="-20dp"
+                    app:paddingBottom="-15dp"
+                    app:paddingLeft="-15dp"
+                    app:paddingRight="0dp"
+                    app:graphMarginBottom="0dp"
+                    app:graphMarginLeft="0dp"
+                    app:graphMarginRight="0dp"
+                    app:graphPaddingTop="0dp"
+                    app:graphPaddingBottom="0dp"
+                    app:graphPaddingLeft="0dp"
+                    app:graphPaddingRight="5dp"
+                    app:lineLabelAlignBottom="center"
+                    app:lineLabelAlignLeft="right"
+                    app:lineLabelInsetBottom="5dp"
+                    app:lineLabelRotationBottom="0"
+                    app:lineLabelTextColorBottom="@color/dark_gray"
+                    app:lineLabelTextColorLeft="@color/dark_gray"
+                    app:lineLabelTextSizeBottom="8dp"
+                    app:lineLabelTextSizeLeft="8dp" />
             </LinearLayout>
 
         </LinearLayout>
