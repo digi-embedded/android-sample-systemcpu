@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -174,7 +174,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 	protected String validateSettings() {
 		// Sampling rate value.
 		String samplingRateValue = samplingRateEditText.getText().toString();
-		if (samplingRateValue.trim().length() == 0)
+		if (samplingRateValue.trim().isEmpty())
 			return ERROR_SAMPLING_RATE_EMPTY;
 		try {
 			long longVar = Long.parseLong(samplingRateValue.trim());
@@ -188,7 +188,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 
 		// Up threshold value.
 		String upThresholdValue = upThresholdEditText.getText().toString();
-		if (upThresholdValue.trim().length() == 0)
+		if (upThresholdValue.trim().isEmpty())
 			return ERROR_UP_THRESHOLD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(upThresholdValue.trim());
@@ -201,7 +201,7 @@ public class ConfigureGovernorOndemandDialog extends ConfigureGovernorDialog {
 
 		// Sampling down factor value.
 		String samplingDownFactorValue = samplingDownFactorEditText.getText().toString();
-		if (samplingDownFactorValue.trim().length() == 0)
+		if (samplingDownFactorValue.trim().isEmpty())
 			return ERROR_SAMPLING_DOWN_FACTOR_EMPTY;
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());

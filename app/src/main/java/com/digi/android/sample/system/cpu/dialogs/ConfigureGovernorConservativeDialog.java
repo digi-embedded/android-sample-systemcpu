@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -220,7 +220,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 	protected String validateSettings() {
 		// Sampling rate value.
 		String samplingRateValue = samplingRateEditText.getText().toString();
-		if (samplingRateValue.trim().length() == 0)
+		if (samplingRateValue.trim().isEmpty())
 			return ERROR_SAMPLING_RATE_EMPTY;
 		try {
 			long longVar = Long.parseLong(samplingRateValue.trim());
@@ -235,7 +235,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		// Up threshold value.
 		String upThresholdValue = upThresholdEditText.getText().toString();
 		int upThr;
-		if (upThresholdValue.trim().length() == 0)
+		if (upThresholdValue.trim().isEmpty())
 			return ERROR_UP_THRESHOLD_EMPTY;
 		try {
 			upThr = Integer.parseInt(upThresholdValue.trim());
@@ -246,7 +246,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 		// Down threshold value.
 		String downThresholdValue = downThresholdEditText.getText().toString();
 		int downThr;
-		if (downThresholdValue.trim().length() == 0)
+		if (downThresholdValue.trim().isEmpty())
 			return ERROR_DOWN_THRESHOLD_EMPTY;
 		try {
 			downThr = Integer.parseInt(downThresholdValue.trim());
@@ -260,14 +260,14 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 					+ String.format(Locale.getDefault(), ERROR_LIMITS, downThr, 100);
 
 		// Down threshold limits.
-		if (downThr < GovernorConservative.MIN_DOWN_THRESHOLD || downThr >= upThr)
+		if (downThr < GovernorConservative.MIN_DOWN_THRESHOLD)
 			return ERROR_DOWN_THRESHOLD_INVALID + " "
 					+ String.format(Locale.getDefault(), ERROR_LIMITS, GovernorConservative.MIN_DOWN_THRESHOLD, upThr);
 
 
 		// Sampling down factor value.
 		String samplingDownFactorValue = samplingDownFactorEditText.getText().toString();
-		if (samplingDownFactorValue.trim().length() == 0)
+		if (samplingDownFactorValue.trim().isEmpty())
 			return ERROR_SAMPLING_DOWN_FACTOR_EMPTY;
 		try {
 			int intVar = Integer.parseInt(samplingDownFactorValue.trim());
@@ -280,7 +280,7 @@ public class ConfigureGovernorConservativeDialog extends ConfigureGovernorDialog
 
 		// Frequency step value.
 		String freqStepValue = freqStepEditText.getText().toString();
-		if (freqStepValue.trim().length() == 0)
+		if (freqStepValue.trim().isEmpty())
 			return ERROR_FREQ_STEP_EMPTY;
 		try {
 			int intVar = Integer.parseInt(freqStepValue.trim());

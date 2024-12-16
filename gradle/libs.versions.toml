@@ -1,0 +1,12 @@
+[versions]
+agp = "8.8.0"
+material = "1.12.0"
+firebase = "20.0.0"
+
+[libraries]
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+firebase = { group = "com.google.firebase", name = "firebase-appindexing", version.ref = "firebase" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+

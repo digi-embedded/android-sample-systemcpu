@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -35,13 +34,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import androidx.core.content.ContextCompat;
 
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
@@ -179,7 +179,7 @@ public class CPUSampleApp extends Activity {
 
 		if (progressReceiver == null)
 			progressReceiver = new ProgressReceiver();
-		registerReceiver(progressReceiver, new IntentFilter(Pi.NEW_PROGRESS_INTENT));
+		registerReceiver(progressReceiver, new IntentFilter(Pi.NEW_PROGRESS_INTENT), Context.RECEIVER_EXPORTED);
 
 		// Initialize all the CPU values and set them in the corresponding controls.
 		initializeValues();
@@ -294,8 +294,8 @@ public class CPUSampleApp extends Activity {
 			minFrequencySpinner.setAdapter(frequenciesListAdapter);
 
 			// Configure the selected max and min scaling frequencies.
-			int maxScalingFreq = cpuManager.getMaxScalingFrequency();
-			int minScalingFreq = cpuManager.getMinScalingFrequency();
+			int maxScalingFreq = cpuManager.getMaxFrequency();
+			int minScalingFreq = cpuManager.getMinFrequency();
 
 			if (frequenciesListAdapter.getPosition(maxScalingFreq) != -1)
 				maxFrequencySpinner.setSelection(frequenciesListAdapter.getPosition(maxScalingFreq));
@@ -331,24 +331,9 @@ public class CPUSampleApp extends Activity {
 	 */
 	private void addControlsCallbacks() {
 		// Set the core switches callbacks.
-		core2Switch.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				handleCoreEnablePressed(1);
-			}
-		});
-		core3Switch.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				handleCoreEnablePressed(2);
-			}
-		});
-		core4Switch.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				handleCoreEnablePressed(3);
-			}
-		});
+		core2Switch.setOnClickListener(view -> handleCoreEnablePressed(1));
+		core3Switch.setOnClickListener(view -> handleCoreEnablePressed(2));
+		core4Switch.setOnClickListener(view -> handleCoreEnablePressed(3));
 
 		// Set the spinners callbacks.
 		maxFrequencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -398,53 +383,26 @@ public class CPUSampleApp extends Activity {
 		});
 
 		// Set the buttons callbacks.
-		configureGovernorButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				handleConfigureGovernorButtonPressed();
-			}
-		});
-		piCalculationButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				handleCalculatePiButtonPressed();
-			}
-		});
-		piResultsButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				handleViewResultsButtonPressed();
-			}
-		});
+		configureGovernorButton.setOnClickListener(view -> handleConfigureGovernorButtonPressed());
+		piCalculationButton.setOnClickListener(view -> handleCalculatePiButtonPressed());
+		piResultsButton.setOnClickListener(view -> handleViewResultsButtonPressed());
 
 		// Set the core check boxes callbacks.
-		core1CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-				if (core1CheckBox.isShown())
-					showCoreUsage(1, b);
-			}
+		core1CheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
+			if (core1CheckBox.isShown())
+				showCoreUsage(1, b);
 		});
-		core2CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-				if (core2CheckBox.isShown())
-					showCoreUsage(2, b);
-			}
+		core2CheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
+			if (core2CheckBox.isShown())
+				showCoreUsage(2, b);
 		});
-		core3CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-				if (core3CheckBox.isShown())
-					showCoreUsage(3, b);
-			}
+		core3CheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
+			if (core3CheckBox.isShown())
+				showCoreUsage(3, b);
 		});
-		core4CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-				if (core4CheckBox.isShown())
-					showCoreUsage(4, b);
-			}
+		core4CheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
+			if (core4CheckBox.isShown())
+				showCoreUsage(4, b);
 		});
 	}
 
@@ -474,28 +432,32 @@ public class CPUSampleApp extends Activity {
 		// CPU series (always present).
 		cpuSeries = new SimpleXYSeries("CPU Usage (%)");
 		cpuSeries.useImplicitXVals();
-		LineAndPointFormatter cpuFormatter = new LineAndPointFormatter(getResources().getColor(R.color.blue), null,
-				getResources().getColor(R.color.blue), null);
+		LineAndPointFormatter cpuFormatter = new LineAndPointFormatter(
+				ContextCompat.getColor(getApplicationContext(), R.color.blue), null,
+				ContextCompat.getColor(getApplicationContext(), R.color.blue), null);
 		Paint cpuPaint = new Paint();
 		cpuPaint.setAlpha(100);
-		cpuPaint.setShader(new LinearGradient(0, 0, 0, 250, getResources().getColor(R.color.blue),
-				getResources().getColor(R.color.blue), Shader.TileMode.MIRROR));
+		cpuPaint.setShader(new LinearGradient(0, 0, 0, 250,
+				ContextCompat.getColor(getApplicationContext(), R.color.blue),
+				ContextCompat.getColor(getApplicationContext(), R.color.blue), Shader.TileMode.MIRROR));
 		cpuFormatter.setFillPaint(cpuPaint);
 		cpuPlot.addSeries(cpuSeries, cpuFormatter);
 
 		// Core 1 series (always present).
 		core1Series = new SimpleXYSeries("Core 1 Usage (%)");
 		core1Series.useImplicitXVals();
-		core1Formatter = new LineAndPointFormatter(getResources().getColor(R.color.dark_green), null,
-				Color.TRANSPARENT, null);
+		core1Formatter = new LineAndPointFormatter(
+				ContextCompat.getColor(getApplicationContext(), R.color.dark_green),
+				null, Color.TRANSPARENT, null);
 		cpuPlot.addSeries(core1Series, core1Formatter);
 
 		// Core 2 series.
 		if (numberOfCores > 1) {
 			core2Series = new SimpleXYSeries("Core 2 Usage (%)");
 			core2Series.useImplicitXVals();
-			core2Formatter = new LineAndPointFormatter(getResources().getColor(R.color.red), null,
-					Color.TRANSPARENT, null);
+			core2Formatter = new LineAndPointFormatter(
+					ContextCompat.getColor(getApplicationContext(), R.color.red),
+					null, Color.TRANSPARENT, null);
 			cpuPlot.addSeries(core2Series, core2Formatter);
 		}
 
@@ -503,8 +465,9 @@ public class CPUSampleApp extends Activity {
 		if (numberOfCores > 2) {
 			core3Series = new SimpleXYSeries("Core 3 Usage (%)");
 			core3Series.useImplicitXVals();
-			core3Formatter = new LineAndPointFormatter(getResources().getColor(R.color.orange), null,
-					Color.TRANSPARENT, null);
+			core3Formatter = new LineAndPointFormatter(
+					ContextCompat.getColor(getApplicationContext(), R.color.orange),
+					null, Color.TRANSPARENT, null);
 			cpuPlot.addSeries(core3Series, core3Formatter);
 		}
 
@@ -512,8 +475,9 @@ public class CPUSampleApp extends Activity {
 		if (numberOfCores > 3) {
 			core4Series = new SimpleXYSeries("Core 4 Usage (%)");
 			core4Series.useImplicitXVals();
-			core4Formatter = new LineAndPointFormatter(getResources().getColor(R.color.purple), null,
-					Color.TRANSPARENT, null);
+			core4Formatter = new LineAndPointFormatter(
+					ContextCompat.getColor(getApplicationContext(), R.color.purple),
+					null, Color.TRANSPARENT, null);
 			cpuPlot.addSeries(core4Series, core4Formatter);
 		}
 	}
@@ -666,19 +630,16 @@ public class CPUSampleApp extends Activity {
 		configureGovernorDialog.show();
 
 		// This thread waits until dialog is closed, dialog is notified itself when that happens.
-		Thread waitThread = new Thread() {
-			@Override
-			public void run() {
-				synchronized (configureGovernorDialog) {
-					try {
-						configureGovernorDialog.wait();
-						governorDlgOpen = false;
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+		Thread waitThread = new Thread(() -> {
+			synchronized (configureGovernorDialog) {
+				try {
+					configureGovernorDialog.wait();
+					governorDlgOpen = false;
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
-		};
+		});
 		waitThread.start();
 	}
 
@@ -727,7 +688,7 @@ public class CPUSampleApp extends Activity {
 				Toast toast = Toast.makeText(getApplicationContext(),
 						"Minimum scaling frequency cannot be greater than the maximum scaling frequency.", Toast.LENGTH_LONG);
 				ArrayAdapter<Integer> frequenciesListAdapter = (ArrayAdapter<Integer>)minFrequencySpinner.getAdapter();
-				minFrequencySpinner.setSelection(frequenciesListAdapter.getPosition(cpuManager.getMinScalingFrequency()));
+				minFrequencySpinner.setSelection(frequenciesListAdapter.getPosition(cpuManager.getMinFrequency()));
 				toast.show();
 				return;
 			}
@@ -769,24 +730,18 @@ public class CPUSampleApp extends Activity {
 			piTimeText.setText("");
 			piResultsButton.setEnabled(false);
 
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						long time = System.currentTimeMillis();
-						PiParallel.calculatePi(Long.parseLong(piDigitsEditText.getText().toString()));
-						final long elapsed = System.currentTimeMillis() - time;
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								piProgressText.setText(PI_STATUS_FINISHED);
-								piTimeText.setText(String.format(Locale.getDefault(), "%.2f s", elapsed / 1000.0));
-								piResultsButton.setEnabled(true);
-								piCalculationButton.setChecked(false);
-							}
-						});
-					} catch (ThreadDeath ignored) {}
-				}
+			new Thread(() -> {
+				try {
+					long time = System.currentTimeMillis();
+					PiParallel.calculatePi(Long.parseLong(piDigitsEditText.getText().toString()));
+					final long elapsed = System.currentTimeMillis() - time;
+					runOnUiThread(() -> {
+						piProgressText.setText(PI_STATUS_FINISHED);
+						piTimeText.setText(String.format(Locale.getDefault(), "%.2f s", elapsed / 1000.0));
+						piResultsButton.setEnabled(true);
+						piCalculationButton.setChecked(false);
+					});
+				} catch (ThreadDeath ignored) {}
 			}).start();
 		} else {
 			PiParallel.cancel();
@@ -822,12 +777,9 @@ public class CPUSampleApp extends Activity {
 
 		builder.setPositiveButton(
 				"OK",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-						finish();
-					}
+				(dialog, id) -> {
+					dialog.cancel();
+					finish();
 				});
 		AlertDialog alert = builder.create();
 		alert.show();
@@ -908,32 +860,29 @@ public class CPUSampleApp extends Activity {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						cpuPlot.redraw();
-						statusLoops += 1;
+				runOnUiThread(() -> {
+					cpuPlot.redraw();
+					statusLoops += 1;
 
-						// Update the status values.
-						if (statusLoops == STATUS_PERIOD) {
-							statusLoops = 0;
-							int currentFrequency = -1;
-							float temperature = -1.0f;
-							long memory = -1;
-							long totalMemory = -1;
-							try {
-								currentFrequency = cpuManager.getFrequency();
-								temperature = cpuManager.getCurrentTemperature();
-								memory = memoryManager.getFreeMemory();
-								totalMemory = memoryManager.getTotalMemory();
-							} catch (CPUException | CPUTemperatureException | IOException e) {
-								e.printStackTrace();
-							}
-							statusTemperatureText.setText(String.format(Locale.getDefault(), "%.2f °C", temperature));
-							statusUsageText.setText(String.format(Locale.getDefault(),"%.2f %%", overallUsage));
-							statusFreqText.setText(String.format(Locale.getDefault(),"%d kHz", currentFrequency));
-							statusMemoryText.setText(String.format(Locale.getDefault(),"%d / %d kB", memory, totalMemory));
+					// Update the status values.
+					if (statusLoops == STATUS_PERIOD) {
+						statusLoops = 0;
+						int currentFrequency = -1;
+						float temperature = -1.0f;
+						long memory = -1;
+						long totalMemory = -1;
+						try {
+							currentFrequency = cpuManager.getFrequency();
+							temperature = cpuManager.getCurrentTemperature();
+							memory = memoryManager.getFreeMemory();
+							totalMemory = memoryManager.getTotalMemory();
+						} catch (CPUException | CPUTemperatureException | IOException e) {
+							e.printStackTrace();
 						}
+						statusTemperatureText.setText(String.format(Locale.getDefault(), "%.2f °C", temperature));
+						statusUsageText.setText(String.format(Locale.getDefault(),"%.2f %%", overallUsage));
+						statusFreqText.setText(String.format(Locale.getDefault(),"%d kHz", currentFrequency));
+						statusMemoryText.setText(String.format(Locale.getDefault(),"%d / %d kB", memory, totalMemory));
 					}
 				});
 			}

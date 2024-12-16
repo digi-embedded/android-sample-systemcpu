@@ -1,3 +1,0 @@
-include ':figlib-1.0.7'
-include ':androidplot-core-1.5.7'
-include ':app'

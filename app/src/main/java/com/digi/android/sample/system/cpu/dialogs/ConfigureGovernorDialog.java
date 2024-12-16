@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -18,7 +18,6 @@ package com.digi.android.sample.system.cpu.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -100,7 +99,7 @@ public abstract class ConfigureGovernorDialog {
 		}
 
 		// Get the status text.
-		statusText = (TextView) configureDialogView.findViewById(R.id.status_text);
+		statusText = configureDialogView.findViewById(R.id.status_text);
 
 		// Initialize rest of controls.
 		initializeControls();
@@ -129,22 +128,16 @@ public abstract class ConfigureGovernorDialog {
 				break;
 		}
 		alertDialogBuilder.setCancelable(false);
-		alertDialogBuilder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				applyValues();
-				synchronized (ConfigureGovernorDialog.this) {
-					ConfigureGovernorDialog.this.notify();
-				}
+		alertDialogBuilder.setPositiveButton(R.string.button_ok, (dialog, id) -> {
+			applyValues();
+			synchronized (ConfigureGovernorDialog.this) {
+				ConfigureGovernorDialog.this.notify();
 			}
 		});
-		alertDialogBuilder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
-				synchronized (ConfigureGovernorDialog.this) {
-					ConfigureGovernorDialog.this.notify();
-				}
+		alertDialogBuilder.setNegativeButton(R.string.button_cancel, (dialog, id) -> {
+			dialog.cancel();
+			synchronized (ConfigureGovernorDialog.this) {
+				ConfigureGovernorDialog.this.notify();
 			}
 		});
 		// Create the dialog.

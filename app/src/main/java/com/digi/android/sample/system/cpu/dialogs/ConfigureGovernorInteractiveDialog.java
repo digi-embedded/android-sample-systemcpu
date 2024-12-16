@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -266,7 +266,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 	protected String validateSettings() {
 		// Minimum sample rate value.
 		String minSampleRateValue = minSampleRateEditText.getText().toString();
-		if (minSampleRateValue.trim().length() == 0)
+		if (minSampleRateValue.trim().isEmpty())
 			return ERROR_MIN_SAMPLE_RATE_EMPTY;
 		try {
 			long longVar = Long.parseLong(minSampleRateValue.trim());
@@ -279,7 +279,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// High speed frequency value.
 		String hiSpeedFreqValue = hiSpeedFreqSpinner.getSelectedItem().toString();
-		if (hiSpeedFreqValue.trim().length() == 0)
+		if (hiSpeedFreqValue.trim().isEmpty())
 			return ERROR_HI_SPEED_FREQ_EMPTY;
 		try {
 			int intVar = Integer.parseInt(hiSpeedFreqValue.trim());
@@ -291,7 +291,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Go high speed load value.
 		String goHiSpeedLoadValue = goHiSpeedLoadEditText.getText().toString();
-		if (goHiSpeedLoadValue.trim().length() == 0)
+		if (goHiSpeedLoadValue.trim().isEmpty())
 			return ERROR_GO_HI_SPEED_LOAD_EMPTY;
 		try {
 			int intVar = Integer.parseInt(goHiSpeedLoadValue.trim());
@@ -304,7 +304,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Above high speed delay value.
 		String aboveHiSpeedDelayValue = aboveHiSpeedDelayEditText.getText().toString();
-		if (aboveHiSpeedDelayValue.trim().length() == 0)
+		if (aboveHiSpeedDelayValue.trim().isEmpty())
 			return ERROR_ABOVE_HI_SPEED_DELAY_EMPTY;
 		try {
 			long longVar = Long.parseLong(aboveHiSpeedDelayValue.trim());
@@ -317,7 +317,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Timer rate value.
 		String timerRateValue = timerRateEditText.getText().toString();
-		if (timerRateValue.trim().length() == 0)
+		if (timerRateValue.trim().isEmpty())
 			return ERROR_TIMER_RATE_EMPTY;
 		try {
 			long longVar = Long.parseLong(timerRateValue.trim());
@@ -330,7 +330,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Timer slack value.
 		String timerSlackValue = timerSlackEditText.getText().toString();
-		if (timerSlackValue.trim().length() == 0)
+		if (timerSlackValue.trim().isEmpty())
 			return ERROR_TIMER_SLACK_EMPTY;
 		try {
 			long longVar = Long.parseLong(timerSlackValue.trim());
@@ -343,7 +343,7 @@ public class ConfigureGovernorInteractiveDialog extends ConfigureGovernorDialog 
 
 		// Boost pulse duration value.
 		String boostPulseDurationValue = boostPulseDurationEditText.getText().toString();
-		if (boostPulseDurationValue.trim().length() == 0)
+		if (boostPulseDurationValue.trim().isEmpty())
 			return ERROR_BOOST_PULSE_DURATION_EMPTY;
 		try {
 			long longVar = Long.parseLong(boostPulseDurationValue.trim());

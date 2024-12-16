@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2016-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -87,7 +87,7 @@ public class ConfigureGovernorUserspaceDialog extends ConfigureGovernorDialog {
 	protected String validateSettings() {
 		// Custom frequency value.
 		String customFreqValue = customFreqSpinner.getSelectedItem().toString();
-		if (customFreqValue.trim().length() == 0)
+		if (customFreqValue.trim().isEmpty())
 			return ERROR_CUSTOM_FREQ_EMPTY;
 		try {
 			int intVar = Integer.parseInt(customFreqValue.trim());

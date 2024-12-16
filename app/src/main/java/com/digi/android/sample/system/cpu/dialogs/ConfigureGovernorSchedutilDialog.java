@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2019-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -110,7 +110,7 @@ public class ConfigureGovernorSchedutilDialog extends ConfigureGovernorDialog {
     protected String validateSettings() {
         // Down rate limit.
         String downRateLimitValue = downRateLimitText.getText().toString();
-        if (downRateLimitValue.trim().length() == 0)
+        if (downRateLimitValue.trim().isEmpty())
             return String.format(ERROR_RATE_LIMIT_EMPTY, "Down");
         try {
             long longVar = Long.parseLong(downRateLimitValue.trim());
@@ -123,7 +123,7 @@ public class ConfigureGovernorSchedutilDialog extends ConfigureGovernorDialog {
 
         // Up rate limit.
         String upRateLimitValue = upRateLimitText.getText().toString();
-        if (upRateLimitValue.trim().length() == 0)
+        if (upRateLimitValue.trim().isEmpty())
             return String.format(ERROR_RATE_LIMIT_EMPTY, "Up");
         try {
             long longVar = Long.parseLong(upRateLimitValue.trim());
